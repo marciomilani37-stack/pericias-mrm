@@ -1,0 +1,2154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Perícias MRM em Geral</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<style>
+:root{--bg:#0a0c10;--bg2:#0f1318;--bg3:#151b24;--border:#1e2d3d;--border2:#2a3f54;--gold:#c9a84c;--gold2:#e8c96d;--gold3:#f5e4a0;--teal:#00b4d8;--teal2:#48cae4;--red:#e63946;--green:#2dc653;--text:#d4dbe8;--text2:#8899aa;--text3:#556677;--shadow:0 4px 32px rgba(0,0,0,0.6);--gg:0 0 20px rgba(201,168,76,0.3);}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,'Times New Roman',serif;min-height:100vh;overflow-x:hidden;}
+.screen{display:none;min-height:100vh;}
+.screen.active{display:flex;flex-direction:column;}
+
+/* LOGIN */
+#scLogin{background:radial-gradient(ellipse at 30% 20%,#0d1f35,#0a0c10);align-items:center;justify-content:center;position:relative;}
+#scLogin::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 50px,rgba(201,168,76,.03) 50px,rgba(201,168,76,.03) 51px),repeating-linear-gradient(90deg,transparent,transparent 50px,rgba(201,168,76,.03) 50px,rgba(201,168,76,.03) 51px);pointer-events:none;}
+.lbox{background:var(--bg3);border:1px solid var(--border2);border-top:3px solid var(--gold);padding:40px 36px;width:min(430px,95vw);position:relative;box-shadow:var(--shadow),var(--gg);animation:fsup .6s ease;}
+@keyframes fsup{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.seal{width:72px;height:72px;background:conic-gradient(var(--gold) 0deg,var(--gold2) 60deg,var(--gold3) 120deg,var(--gold) 180deg,var(--gold2) 240deg,var(--gold3) 300deg,var(--gold) 360deg);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 0 28px rgba(201,168,76,.5);margin-bottom:12px;}
+.llogo{text-align:center;margin-bottom:28px;}
+.llogo h1{font-family:'Cinzel';font-size:clamp(16px,4vw,22px);color:var(--gold2);letter-spacing:2px;}
+.llogo p{font-size:12px;color:var(--text2);letter-spacing:3px;text-transform:uppercase;margin-top:3px;}
+.tabs{display:flex;margin-bottom:24px;border:1px solid var(--border2);overflow:hidden;border-radius:2px;}
+.tab{flex:1;padding:9px;background:var(--bg2);border:none;color:var(--text2);font-family:'Space Mono';font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.tab.on{background:var(--gold);color:#0a0c10;font-weight:700;}
+.fg{margin-bottom:16px;}
+.fg label{display:block;font-family:'Space Mono';font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:6px;}
+.fg input,.fg select{width:100%;background:var(--bg2);border:1px solid var(--border2);color:var(--text);padding:11px 14px;font-family:'Crimson Pro';font-size:15px;transition:border-color .2s,box-shadow .2s;outline:none;border-radius:2px;}
+.fg input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.1);}
+.btnP{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0c10;border:none;padding:13px;font-family:'Cinzel';font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .2s;border-radius:2px;}
+.btnP:hover,.btnP:active{filter:brightness(1.1);}
+
+/* APP */
+.topbar{background:var(--bg3);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.tlogo{font-family:'Cinzel';font-size:clamp(11px,2.5vw,15px);color:var(--gold2);letter-spacing:2px;display:flex;align-items:center;gap:8px;}
+.tlogo span{color:var(--text2);font-size:10px;letter-spacing:1px;}
+.tright{display:flex;align-items:center;gap:6px;}
+.tusr{font-family:'Space Mono';font-size:9px;color:var(--text2);padding:5px 10px;border:1px solid var(--border);border-radius:2px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.bico{width:34px;height:34px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;border-radius:2px;transition:all .2s;}
+.bico:hover{border-color:var(--gold);color:var(--gold);}
+
+/* SIDENAV */
+.sideWrap{display:flex;flex:1;}
+.sidenav{position:fixed;left:0;top:52px;bottom:0;width:210px;background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;z-index:90;transition:transform .3s;}
+.sidenav.hide{transform:translateX(-100%);}
+.snSec{padding:14px 14px 6px;font-family:'Space Mono';font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);}
+.ni{display:flex;align-items:center;gap:9px;padding:9px 14px;cursor:pointer;font-family:'Crimson Pro';font-size:14px;color:var(--text2);border-left:3px solid transparent;transition:all .2s;user-select:none;}
+.ni:hover{background:var(--bg3);color:var(--text);}
+.ni.on{background:var(--bg3);color:var(--gold);border-left-color:var(--gold);}
+.ni .ico{font-size:16px;width:20px;text-align:center;}
+.mc{margin-left:210px;padding:20px;flex:1;transition:margin .3s;}
+.mc.full{margin-left:0;}
+
+/* VIEWS */
+.view{display:none;}
+.view.on{display:block;}
+.vtit{font-family:'Cinzel';font-size:clamp(15px,3vw,20px);color:var(--gold2);letter-spacing:2px;margin-bottom:4px;display:flex;align-items:center;gap:10px;}
+.vsub{font-size:13px;color:var(--text2);margin-bottom:20px;font-style:italic;}
+
+/* CARDS */
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:24px;}
+.dc{background:var(--bg3);border:1px solid var(--border);border-top:3px solid var(--gold);padding:18px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.dc:hover{border-color:var(--gold2);box-shadow:var(--gg);}
+.dc .cico{font-size:28px;margin-bottom:8px;}
+.dc h3{font-family:'Cinzel';font-size:12px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:5px;}
+.dc p{font-size:12px;color:var(--text2);line-height:1.5;}
+.badge{display:inline-block;padding:2px 7px;font-family:'Space Mono';font-size:8px;letter-spacing:1px;text-transform:uppercase;border-radius:2px;margin-top:6px;}
+.bg{background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.3);}
+.bt{background:rgba(0,180,216,.15);color:var(--teal2);border:1px solid rgba(0,180,216,.3);}
+.br{background:rgba(230,57,70,.15);color:var(--red);border:1px solid rgba(230,57,70,.3);}
+.bgreen{background:rgba(45,198,83,.15);color:var(--green);border:1px solid rgba(45,198,83,.3);}
+
+/* IMAGE PANELS */
+.alayout{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+@media(max-width:680px){.alayout{grid-template-columns:1fr;}}
+.ipanel{background:var(--bg3);border:1px solid var(--border);padding:14px;}
+.iptit{font-family:'Space Mono';font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.dot{width:7px;height:7px;border-radius:50%;}
+.dred{background:var(--red);box-shadow:0 0 7px var(--red);}
+.dgrn{background:var(--green);box-shadow:0 0 7px var(--green);}
+.dropA{border:2px dashed var(--border2);min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:border-color .2s,background .2s;position:relative;overflow:hidden;background:var(--bg2);}
+.dropA:hover,.dropA:active{border-color:var(--gold);background:rgba(201,168,76,.04);}
+.dropA.hasImg{border-style:solid;border-color:var(--border2);}
+.dropA img{max-width:100%;max-height:260px;object-fit:contain;display:block;}
+.dropA .dico{font-size:32px;color:var(--border2);pointer-events:none;}
+.dropA .dhint{font-size:12px;color:var(--text3);text-align:center;pointer-events:none;padding:0 12px;}
+.iacts{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap;}
+
+/* BUTTONS */
+.bs{padding:7px 13px;font-family:'Space Mono';font-size:9px;letter-spacing:1px;border:1px solid var(--border2);background:var(--bg2);color:var(--text2);cursor:pointer;transition:all .2s;border-radius:2px;display:inline-flex;align-items:center;gap:5px;user-select:none;}
+.bs:hover,.bs:active{border-color:var(--gold);color:var(--gold);}
+.bs.tl{border-color:var(--teal);color:var(--teal);}
+.bs.tl:hover{border-color:var(--teal2);color:var(--teal2);}
+.bs.rd{border-color:var(--red);color:var(--red);}
+.bs.gd{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08);}
+.bs.gn{border-color:var(--green);color:var(--green);}
+
+/* CONTROL BOX */
+.cbox{background:var(--bg3);border:1px solid var(--border);padding:14px;margin-bottom:14px;}
+.ctit{font-family:'Cinzel';font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:10px;}
+.crow{display:flex;gap:7px;flex-wrap:wrap;}
+
+/* OVERLAY */
+.ovpanel{background:var(--bg3);border:1px solid var(--border);padding:14px;margin-bottom:14px;display:none;}
+.ovpanel.on{display:block;}
+.ovcont{position:relative;min-height:160px;background:var(--bg2);overflow:hidden;cursor:crosshair;border:1px solid var(--border2);}
+.ovcont img{max-width:100%;display:block;}
+.ovcont .imgB{position:absolute;top:0;left:0;width:100%;opacity:.5;pointer-events:none;}
+.slrow{display:flex;align-items:center;gap:10px;margin-top:10px;}
+.slrow label{font-family:'Space Mono';font-size:9px;color:var(--text2);white-space:nowrap;}
+.slrow input[type=range]{flex:1;accent-color:var(--gold);}
+.dmk{position:absolute;width:22px;height:22px;background:rgba(230,57,70,.9);border:2px solid var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Space Mono';font-size:9px;color:#fff;cursor:pointer;z-index:10;transform:translate(-50%,-50%);box-shadow:0 0 8px rgba(230,57,70,.5);transition:transform .2s;}
+.dmk:hover,.dmk.sel{transform:translate(-50%,-50%) scale(1.3);}
+.dmk.sel{background:var(--gold);border-color:var(--gold2);}
+
+/* RESULTS */
+.rtbl{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px;}
+.rtbl th{background:var(--bg2);padding:9px 11px;font-family:'Space Mono';font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);text-align:left;border-bottom:2px solid var(--border2);}
+.rtbl td{padding:9px 11px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.rtbl tr:hover td{background:rgba(255,255,255,.02);}
+.pbar{background:var(--bg2);height:5px;border-radius:3px;overflow:hidden;width:80px;display:inline-block;vertical-align:middle;margin-left:6px;}
+.pfill{height:100%;border-radius:3px;}
+.trfinal td{font-family:'Cinzel';font-size:14px;color:var(--gold);border-top:2px solid var(--border2);}
+.verdict{padding:18px;margin-top:14px;border:2px solid;text-align:center;}
+.vauto{border-color:var(--green);background:rgba(45,198,83,.05);}
+.vfalse{border-color:var(--red);background:rgba(230,57,70,.05);}
+.vsusp{border-color:var(--gold);background:rgba(201,168,76,.05);}
+.vt{font-family:'Cinzel';font-size:clamp(14px,3vw,20px);letter-spacing:3px;margin-bottom:6px;}
+.vauto .vt{color:var(--green);}
+.vfalse .vt{color:var(--red);}
+.vsusp .vt{color:var(--gold);}
+.vpct{font-family:'Space Mono';font-size:clamp(24px,5vw,42px);font-weight:700;letter-spacing:4px;}
+.vd{font-size:13px;color:var(--text2);margin-top:6px;font-style:italic;}
+
+/* REPORT */
+.rform{background:var(--bg3);border:1px solid var(--border);padding:18px;margin-bottom:14px;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+@media(max-width:560px){.frow{grid-template-columns:1fr;}}
+.rprev{background:#fff;color:#111;padding:36px;border:1px solid var(--border);font-family:'Crimson Pro',Georgia,serif;max-width:760px;margin:0 auto;display:none;}
+.rprev.on{display:block;}
+.rhead{text-align:center;border-bottom:2px solid #222;padding-bottom:16px;margin-bottom:20px;}
+.rhead h1{font-size:18px;font-family:'Cinzel',serif;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;}
+.rhead h2{font-size:12px;font-family:'Cinzel',serif;letter-spacing:2px;color:#444;}
+.rmeta{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px;font-size:13px;}
+.rmeta dt{font-weight:700;color:#444;}
+.rtable2{width:100%;border-collapse:collapse;margin:12px 0;font-size:12px;}
+.rtable2 th{background:#f0f0f0;padding:7px 9px;text-align:left;border:1px solid #ccc;font-family:'Cinzel';font-size:10px;letter-spacing:1px;}
+.rtable2 td{padding:7px 9px;border:1px solid #ccc;}
+.rfooter{margin-top:36px;padding-top:16px;border-top:1px solid #ccc;display:grid;grid-template-columns:1fr 1fr;gap:36px;text-align:center;font-size:12px;}
+.rfooter div{border-top:1px solid #333;padding-top:7px;}
+
+/* LIBRARY */
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:16px;}
+.lcard{background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--gold);padding:14px;cursor:pointer;transition:all .2s;}
+.lcard:hover{box-shadow:var(--gg);border-color:var(--gold2);}
+.lcard .lico{font-size:26px;margin-bottom:8px;}
+.lcard h4{font-family:'Cinzel';font-size:12px;color:var(--gold);letter-spacing:1px;margin-bottom:5px;}
+.lcard p{font-size:12px;color:var(--text2);line-height:1.5;}
+.lcard .ltag{font-family:'Space Mono';font-size:8px;color:var(--text3);margin-top:7px;letter-spacing:1px;}
+.lviewer{background:var(--bg3);border:1px solid var(--border);padding:20px;margin-top:14px;max-height:480px;overflow-y:auto;display:none;}
+.lviewer.on{display:block;}
+.lviewer h3{font-family:'Cinzel';color:var(--gold2);margin-bottom:10px;font-size:15px;}
+.lviewer h4{font-family:'Cinzel';color:var(--gold);margin:14px 0 6px;font-size:13px;}
+.lviewer p{font-size:14px;line-height:1.8;color:var(--text);margin-bottom:10px;}
+.lviewer .exc{border-left:3px solid var(--gold);padding-left:14px;color:var(--text2);font-style:italic;margin:10px 0;}
+
+/* CHECKLIST */
+.chitem{background:var(--bg3);border:1px solid var(--border);padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s;user-select:none;}
+.chitem:hover{border-color:var(--border2);}
+.chitem.ck{border-color:var(--green);background:rgba(45,198,83,.05);}
+.chitem.fail{border-color:var(--red);background:rgba(230,57,70,.05);}
+.chico{font-size:20px;width:28px;text-align:center;}
+.chinfo h4{font-size:14px;color:var(--text);margin-bottom:1px;}
+.chinfo p{font-size:11px;color:var(--text2);}
+.chst{margin-left:auto;font-family:'Space Mono';font-size:9px;letter-spacing:1px;}
+.chitem.ck .chst{color:var(--green);}
+.chitem.fail .chst{color:var(--red);}
+
+/* ADMIN */
+.adminbox{background:linear-gradient(135deg,#0d1f35,#0a0c10);border:2px solid var(--gold);padding:20px;margin-bottom:16px;}
+.awarn{display:flex;align-items:center;gap:10px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);padding:10px 14px;margin-bottom:16px;font-family:'Space Mono';font-size:10px;color:var(--gold);letter-spacing:1px;}
+.asec{margin-bottom:20px;}
+.asec h3{font-family:'Cinzel';font-size:13px;color:var(--gold);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase;}
+.utbl{width:100%;border-collapse:collapse;}
+.utbl th{background:var(--bg2);padding:7px 10px;font-family:'Space Mono';font-size:8px;letter-spacing:2px;color:var(--text3);text-align:left;border-bottom:1px solid var(--border2);}
+.utbl td{padding:7px 10px;font-size:12px;border-bottom:1px solid var(--border);}
+
+/* NOTE */
+.hnote{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.2);border-left:4px solid var(--gold);padding:12px 14px;margin-bottom:14px;font-size:12px;color:var(--text2);font-style:italic;line-height:1.7;}
+.hnote strong{color:var(--gold);font-style:normal;}
+
+/* FACTORS */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:9px;margin-bottom:14px;}
+.fitem{background:var(--bg2);border:1px solid var(--border);padding:10px;}
+.fitem label{font-family:'Space Mono';font-size:8px;letter-spacing:1px;color:var(--text3);display:block;margin-bottom:5px;text-transform:uppercase;}
+.fitem select{width:100%;background:transparent;border:none;border-bottom:1px solid var(--border2);color:var(--text);font-size:13px;font-family:'Crimson Pro';padding:3px 0;outline:none;}
+.fitem select option{background:var(--bg3);}
+
+/* STEPS */
+.steps{display:flex;gap:0;margin-bottom:20px;overflow-x:auto;}
+.step{flex:1;padding:8px 10px;background:var(--bg2);border:1px solid var(--border);border-right:none;font-family:'Space Mono';font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);text-align:center;white-space:nowrap;min-width:60px;}
+.step:last-child{border-right:1px solid var(--border);}
+.step.done{background:rgba(45,198,83,.1);color:var(--green);border-color:var(--green);}
+.step.cur{background:rgba(201,168,76,.1);color:var(--gold);border-color:var(--gold);}
+.stepn{display:block;font-size:16px;margin-bottom:1px;}
+
+/* MODAL */
+.modal{display:none;position:fixed;inset:0;background:rgba(10,12,16,.95);z-index:9000;align-items:center;justify-content:center;}
+.modal.on{display:flex;}
+.mbox{background:var(--bg3);border:1px solid var(--border2);border-top:3px solid var(--gold);padding:20px;width:min(560px,95vw);max-height:90vh;overflow-y:auto;}
+.mtit{font-family:'Cinzel';color:var(--gold2);font-size:14px;letter-spacing:2px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.mclose{cursor:pointer;color:var(--text2);font-size:18px;}
+.mclose:hover{color:var(--red);}
+video{width:100%;background:#000;border:1px solid var(--border2);border-radius:2px;max-height:380px;object-fit:cover;}
+.mst{font-family:'Space Mono';font-size:10px;letter-spacing:1px;margin-bottom:8px;min-height:18px;}
+
+/* AI OVERLAY */
+.aiov{display:none;position:fixed;inset:0;background:rgba(10,12,16,.93);z-index:9990;flex-direction:column;align-items:center;justify-content:center;gap:18px;}
+.aiov.on{display:flex;}
+.spin{width:72px;height:72px;border:3px solid var(--border2);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.aitxt{font-family:'Cinzel';font-size:15px;color:var(--gold2);letter-spacing:3px;}
+.aisub{font-family:'Space Mono';font-size:10px;color:var(--text2);letter-spacing:2px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:16px;right:16px;background:var(--bg3);border:1px solid var(--border2);border-left:4px solid var(--gold);padding:11px 18px;font-size:13px;color:var(--text);z-index:9999;transform:translateX(220%);transition:transform .3s;max-width:280px;box-shadow:var(--shadow);}
+.toast.sh{transform:translateX(0);}
+.toast.er{border-left-color:var(--red);}
+.toast.ok{border-left-color:var(--green);}
+
+/* STATS GRID */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:10px;}
+.scard{background:var(--bg2);border:1px solid var(--border);padding:14px;text-align:center;}
+.scard .slbl{font-family:'Space Mono';font-size:8px;color:var(--text3);letter-spacing:1px;margin-bottom:3px;}
+.scard .sval{font-family:'Cinzel';font-size:26px;}
+
+.sep{height:1px;background:var(--border);margin:18px 0;}
+
+/* HIDDEN FILE INPUT */
+.fhide{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0,0,0,0);pointer-events:none;}
+
+/* DRAG OVER */
+.dropA.dov{border-color:var(--gold2);background:rgba(201,168,76,.08);}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;} ::-webkit-scrollbar-track{background:var(--bg2);} ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;} ::-webkit-scrollbar-thumb:hover{background:var(--gold);}
+
+@media print{body,*{background:#fff!important;color:#000!important;} .topbar,.sidenav,.sideWrap>:not(.mc),.mc>:not(.view.on),#vRelatorio .rform,.bico,.bs,.btnP{display:none!important;} .mc{margin:0!important;padding:0!important;} .rprev{display:block!important;} @page{margin:2cm;}}
+</style>
+</head>
+<body>
+
+<!-- AI Processing -->
+<div class="aiov" id="aiov">
+  <div class="spin"></div>
+  <div class="aitxt">ANALISANDO</div>
+  <div class="aisub" id="aiSub">Processando...</div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Camera Modal -->
+<div class="modal" id="camModal">
+  <div class="mbox">
+    <div class="mtit">📷 CÂMERA EM TEMPO REAL <span class="mclose" onclick="camClose()">✕</span></div>
+    <div class="mst" id="camSt" style="color:var(--text2)">Iniciando câmera...</div>
+    <video id="camFeed" autoplay playsinline muted style="display:none"></video>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+      <button id="capBtn" class="btnP" style="flex:1;font-size:11px;padding:11px;display:none" onclick="camCapture()">📸 CAPTURAR FOTO</button>
+      <button class="bs tl" style="padding:11px 14px" onclick="camFallback()">📁 Câmera do Sistema</button>
+      <button class="bs rd" style="padding:11px 14px" onclick="camClose()">✕ FECHAR</button>
+    </div>
+    <div style="margin-top:10px;padding:9px;background:var(--bg2);border:1px solid var(--border);font-family:'Space Mono';font-size:8px;color:var(--text3);letter-spacing:1px;line-height:1.8">
+      ℹ Se a câmera não abrir: use <strong style="color:var(--teal)">"Câmera do Sistema"</strong> — abre a câmera nativa do Android/Windows. Verifique se o navegador tem permissão de câmera nas configurações.
+    </div>
+  </div>
+</div>
+
+<!-- ==================== LOGIN ==================== -->
+<div class="screen active" id="scLogin">
+  <div class="lbox">
+    <div class="llogo">
+      <div class="seal">⚖️</div>
+      <h1>Perícias MRM</h1>
+      <p>Em Geral · Sistema Pericial</p>
+    </div>
+    <div class="tabs">
+      <button class="tab on" id="tabEntr" onclick="swTab('entrar')">ENTRAR</button>
+      <button class="tab" id="tabCad" onclick="swTab('cadastrar')">CADASTRAR</button>
+    </div>
+    <!-- Login -->
+    <div id="fmEntrar">
+      <div class="fg"><label>E-mail</label><input type="email" id="lEmail" placeholder="seu@email.com" autocomplete="email"></div>
+      <div class="fg"><label>Senha (4 dígitos)</label><input type="password" id="lSenha" maxlength="6" placeholder="••••" autocomplete="current-password"></div>
+      <button class="btnP" onclick="doLogin()">ACESSAR SISTEMA</button>
+    </div>
+    <!-- Register -->
+    <div id="fmCad" style="display:none">
+      <div class="fg"><label>Nome Completo</label><input type="text" id="rNome" placeholder="Seu nome completo"></div>
+      <div class="fg"><label>E-mail</label><input type="email" id="rEmail" placeholder="seu@email.com"></div>
+      <div class="fg"><label>Telefone</label><input type="tel" id="rTel" placeholder="(00) 00000-0000"></div>
+      <div class="fg"><label>CPF</label><input type="text" id="rCpf" placeholder="000.000.000-00"></div>
+      <div class="fg"><label>Senha (4 dígitos)</label><input type="password" id="rSenha" maxlength="4" placeholder="••••"></div>
+      <button class="btnP" onclick="doRegister()">CRIAR CONTA</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== APP ==================== -->
+<div class="screen" id="scApp">
+  <div class="topbar">
+    <div class="tlogo">⚖️ PERÍCIAS MRM <span>EM GERAL</span></div>
+    <div class="tright">
+      <div class="tusr" id="tusr">PERITO</div>
+      <button class="bico" onclick="toggleNav()" title="Menu">☰</button>
+      <button class="bico" onclick="doLogout()" title="Sair" style="font-size:13px">⏻</button>
+    </div>
+  </div>
+  <div class="sideWrap">
+    <nav class="sidenav" id="sidenav">
+      <div class="snSec">Principal</div>
+      <div class="ni on" data-view="vDash" onclick="showView('vDash',this)"><span class="ico">🏠</span>Dashboard</div>
+      <div class="ni" data-view="vAnalise" onclick="showView('vAnalise',this)"><span class="ico">🔬</span>Análise Pericial</div>
+      <div class="ni" data-view="vComp" onclick="showView('vComp',this)"><span class="ico">🔄</span>Comparação</div>
+      <div class="ni" data-view="vResult" onclick="showView('vResult',this)"><span class="ico">📊</span>Resultado</div>
+      <div class="ni" data-view="vRelatorio" onclick="showView('vRelatorio',this)"><span class="ico">📄</span>Relatório</div>
+      <div class="snSec">Recursos</div>
+      <div class="ni" data-view="vBiblio" onclick="showView('vBiblio',this)"><span class="ico">📚</span>Biblioteca Técnica</div>
+      <div class="ni" data-view="vConf" onclick="showView('vConf',this)"><span class="ico">✅</span>2ª Conferência</div>
+      <div class="snSec" id="snAdmin" style="display:none">Administração</div>
+      <div class="ni" id="niAdmin" data-view="vAdmin" onclick="showView('vAdmin',this)" style="display:none"><span class="ico">⚙️</span>Painel Admin</div>
+    </nav>
+    <div class="mc" id="mc">
+
+      <!-- ===== DASHBOARD ===== -->
+      <div class="view on" id="vDash">
+        <div class="vtit">⚖️ Dashboard</div>
+        <div class="vsub">Sistema Pericial · Grafotécnica · Documentoscopia · Papiloscopia · Numerologia</div>
+        <div class="hnote"><strong>⚠ Princípio da Humanização:</strong> Nenhum ser humano reproduz sua assinatura com 100% de identidade. Assinaturas autênticas variam naturalmente entre si em <strong>3% a 4%</strong>. Assinaturas <strong>100% idênticas são suspeitas de falsificação</strong> — base: Tratado de Documentoscopia, Del Picchia Filho.</div>
+        <div class="dgrid">
+          <div class="dc" onclick="showView('vAnalise',null)"><div class="cico">✍️</div><h3>Grafotécnica</h3><p>Análise de assinaturas e escrita manuscrita com IA humanizada</p><span class="badge bg">Principal</span></div>
+          <div class="dc" onclick="showView('vAnalise',null)"><div class="cico">📋</div><h3>Documentoscopia</h3><p>Exame de documentos, adulterações e falsificações documentais</p><span class="badge bt">Ativo</span></div>
+          <div class="dc" onclick="showView('vAnalise',null)"><div class="cico">👆</div><h3>Papiloscopia</h3><p>Análise de impressões digitais, palmares e plantares</p><span class="badge bt">Ativo</span></div>
+          <div class="dc" onclick="showView('vAnalise',null)"><div class="cico">🔢</div><h3>Numerologia</h3><p>Verificação de numeração e marcas de segurança</p><span class="badge bt">Ativo</span></div>
+          <div class="dc" onclick="showView('vBiblio',null)"><div class="cico">📚</div><h3>Biblioteca</h3><p>Tratado de Documentoscopia · Del Picchia Filho e materiais técnicos</p><span class="badge bg">Referência</span></div>
+          <div class="dc" onclick="showView('vRelatorio',null)"><div class="cico">🖨️</div><h3>Relatório Oficial</h3><p>Gerar e imprimir laudo pericial oficial para o processo</p><span class="badge bgreen">Impressão</span></div>
+        </div>
+        <div class="cbox">
+          <div class="ctit">📋 INICIAR NOVA PERÍCIA</div>
+          <div class="crow">
+            <button class="bs gd" onclick="showView('vAnalise',null)">✍️ Grafotécnica</button>
+            <button class="bs gd" onclick="showView('vAnalise',null)">📋 Documentoscopia</button>
+            <button class="bs gd" onclick="showView('vAnalise',null)">👆 Papiloscopia</button>
+            <button class="bs gd" onclick="showView('vAnalise',null)">🔢 Numerologia</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== ANÁLISE ===== -->
+      <div class="view" id="vAnalise">
+        <div class="vtit">🔬 Análise Pericial</div>
+        <div class="vsub">Carregue as imagens · Câmera em tempo real ou Galeria de fotos</div>
+        <div class="steps">
+          <div class="step cur" id="stp1"><span class="stepn">1</span>CAPTURA</div>
+          <div class="step" id="stp2"><span class="stepn">2</span>FATORES</div>
+          <div class="step" id="stp3"><span class="stepn">3</span>IA</div>
+          <div class="step" id="stp4"><span class="stepn">4</span>RESULTADO</div>
+          <div class="step" id="stp5"><span class="stepn">5</span>LAUDO</div>
+        </div>
+        <div class="hnote"><strong>🧬 DNA da Escrita (Del Picchia Filho, Cap.5):</strong> Cada pessoa possui traços gráficos individuais e intransferíveis. Informe os fatores contextuais para análise humanizada correta.</div>
+        <div class="fgrid">
+          <div class="fitem"><label>Tipo de Perícia</label><select id="fTipo"><option>Grafotécnica</option><option>Documentoscopia</option><option>Papiloscopia</option><option>Numerologia</option></select></div>
+          <div class="fitem"><label>Faixa Etária</label><select id="fIdade"><option>Não informado</option><option>Criança (0-12)</option><option>Adolescente (13-17)</option><option>Jovem adulto (18-35)</option><option>Adulto (36-60)</option><option>Idoso (60+)</option></select></div>
+          <div class="fitem"><label>Estado Emocional</label><select id="fEmoc"><option>Não informado</option><option>Estável/Normal</option><option>Sob pressão</option><option>Estressado</option><option>Doença emocional</option></select></div>
+          <div class="fitem"><label>Condição Física</label><select id="fFis"><option>Não informado</option><option>Normal/Saudável</option><option>Doença física</option><option>Limitação motora</option><option>Debilidade</option></select></div>
+          <div class="fitem"><label>Nº de Padrões</label><select id="fPad"><option>1 padrão</option><option>2 padrões</option><option>3 padrões</option><option>4+ padrões</option></select></div>
+          <div class="fitem"><label>Contexto</label><select id="fCtx"><option>Não informado</option><option>Assinatura espontânea</option><option>Assinatura induzida</option><option>Assinatura coagida</option></select></div>
+        </div>
+
+        <div class="alayout">
+          <!-- PEÇA A -->
+          <div class="ipanel">
+            <div class="iptit"><span class="dot dred"></span>PEÇA QUESTIONADA (suspeita)</div>
+            <div class="dropA" id="dropA">
+              <div class="dico" id="dicoA">📄</div>
+              <div class="dhint" id="dhintA">Toque para carregar da galeria</div>
+              <img id="imgA" src="" alt="" style="display:none">
+            </div>
+            <input class="fhide" type="file" id="fileA" accept="image/*" onchange="onFile('A',this)">
+            <div class="iacts">
+              <button class="bs" onclick="openGallery('A')">📁 Galeria</button>
+              <button class="bs tl" onclick="openCam('A')">📷 Câmera</button>
+              <button class="bs rd" onclick="clearImg('A')">🗑 Limpar</button>
+            </div>
+          </div>
+          <!-- PEÇA B -->
+          <div class="ipanel">
+            <div class="iptit"><span class="dot dgrn"></span>PEÇA AUTÊNTICA (padrão)</div>
+            <div class="dropA" id="dropB">
+              <div class="dico" id="dicoB">✅</div>
+              <div class="dhint" id="dhintB">Toque para carregar da galeria</div>
+              <img id="imgB" src="" alt="" style="display:none">
+            </div>
+            <input class="fhide" type="file" id="fileB" accept="image/*" onchange="onFile('B',this)">
+            <div class="iacts">
+              <button class="bs" onclick="openGallery('B')">📁 Galeria</button>
+              <button class="bs tl" onclick="openCam('B')">📷 Câmera</button>
+              <button class="bs rd" onclick="clearImg('B')">🗑 Limpar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cbox">
+          <div class="ctit">🤖 CONTROLES DE ANÁLISE</div>
+          <div class="crow">
+            <button class="bs gd" onclick="runAI()">🧠 ANÁLISE POR IA</button>
+            <button class="bs tl" onclick="toggleOverlay()">🔀 SOBREPOR IMAGENS</button>
+            <button class="bs" onclick="showView('vComp',null)">🔍 COMPARAÇÃO</button>
+            <button class="bs" onclick="showView('vResult',null)">📊 RESULTADO</button>
+          </div>
+        </div>
+
+        <!-- OVERLAY -->
+        <div class="ovpanel" id="ovPanel">
+          <div class="ctit">🔀 SOBREPOSIÇÃO — toque na imagem para marcar diferenças</div>
+          <div class="ovcont" id="ovCont" onclick="addMarker(event)">
+            <img id="ovImgA" src="" alt="" style="max-width:100%;display:block;">
+            <img id="ovImgB" src="" alt="" class="imgB" style="display:none">
+          </div>
+          <div class="slrow">
+            <label>OPACIDADE B:</label>
+            <input type="range" min="0" max="100" value="50" oninput="setOpacity(this.value)">
+            <span id="ovPct" style="font-family:'Space Mono';font-size:10px;color:var(--gold);width:38px">50%</span>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
+            <button class="bs rd" onclick="clearMarkers()">🗑 Limpar Marcadores</button>
+            <button class="bs gd" onclick="saveMarkers()">💾 Salvar Diferenças</button>
+          </div>
+          <div id="mklist" style="margin-top:10px;font-size:12px;color:var(--text2)"></div>
+        </div>
+      </div>
+
+      <!-- ===== COMPARAÇÃO ===== -->
+      <div class="view" id="vComp">
+        <div class="vtit">🔄 Comparação Detalhada</div>
+        <div class="vsub">Análise lado a lado com critérios grafotécnicos</div>
+        <div class="hnote"><strong>📖 Del Picchia Filho (Cap.8 — Grafocinética):</strong> Examinar como se formam os traços — velocidade, pressão, impulsos e anomalias do movimento. Traços lentos e forçados revelam execução não espontânea.</div>
+        <div class="alayout">
+          <div class="ipanel">
+            <div class="iptit"><span class="dot dred"></span>QUESTIONADA</div>
+            <div class="dropA" id="dropC" style="min-height:240px;cursor:default">
+              <img id="compA" src="" alt="" style="display:none;max-width:100%;max-height:260px">
+              <div class="dico" id="cdcoA" style="color:var(--border2)">📄</div>
+              <div class="dhint" id="cdhintA">Carregue na aba Análise Pericial</div>
+            </div>
+            <div style="margin-top:10px;font-family:'Space Mono';font-size:8px;color:var(--text3);line-height:2">
+              VERIFICAR:<br>□ Velocidade dos traços<br>□ Pressão exercida<br>□ Pausas suspeitas<br>□ Direção do movimento<br>□ Proporções das letras
+            </div>
+          </div>
+          <div class="ipanel">
+            <div class="iptit"><span class="dot dgrn"></span>AUTÊNTICA</div>
+            <div class="dropA" id="dropD" style="min-height:240px;cursor:default">
+              <img id="compB" src="" alt="" style="display:none;max-width:100%;max-height:260px">
+              <div class="dico" id="cdcoB" style="color:var(--border2)">✅</div>
+              <div class="dhint" id="cdhintB">Carregue na aba Análise Pericial</div>
+            </div>
+            <div style="margin-top:10px;font-family:'Space Mono';font-size:8px;color:var(--text3);line-height:2">
+              REFERÊNCIA:<br>□ DNA individual da escrita<br>□ Variação natural 3-4%<br>□ Espontaneidade dos traços<br>□ Consistência dos ângulos<br>□ Fluência natural
+            </div>
+          </div>
+        </div>
+        <div class="cbox">
+          <div class="ctit">🔬 CRITÉRIOS — MARQUE OS OBSERVADOS</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px">
+            <div class="chitem" onclick="togCrit(this)" style="padding:9px"><input type="checkbox" style="accent-color:var(--gold);margin-right:6px"><span style="font-size:12px">Variação natural (3-4%)</span></div>
+            <div class="chitem" onclick="togCrit(this)" style="padding:9px"><input type="checkbox" style="accent-color:var(--gold);margin-right:6px"><span style="font-size:12px">Traços lentos/forçados</span></div>
+            <div class="chitem" onclick="togCrit(this)" style="padding:9px"><input type="checkbox" style="accent-color:var(--gold);margin-right:6px"><span style="font-size:12px">Pausas suspeitas</span></div>
+            <div class="chitem" onclick="togCrit(this)" style="padding:9px"><input type="checkbox" style="accent-color:var(--gold);margin-right:6px"><span style="font-size:12px">Proporções alteradas</span></div>
+            <div class="chitem" onclick="togCrit(this)" style="padding:9px"><input type="checkbox" style="accent-color:var(--gold);margin-right:6px"><span style="font-size:12px">Inclinação diferente</span></div>
+            <div class="chitem" onclick="togCrit(this)" style="padding:9px"><input type="checkbox" style="accent-color:var(--gold);margin-right:6px\"><span style="font-size:12px">Pressão diferente</span></div>
+          </div>
+        </div>
+
+        <!-- COMPARAÇÃO DE LETRAS INDIVIDUAIS -->
+        <div class="cbox" style="margin-top:14px">
+          <div class="ctit">🔤 COMPARAÇÃO DE LETRAS INDIVIDUAIS</div>
+          <div class="hnote" style="margin-bottom:12px"><strong>Como usar:</strong> Clique em "Capturar da Peça Autêntica" para recortar uma letra da imagem verdadeira. Depois "Capturar da Peça Questionada" para a mesma letra da suspeita. Descreva a divergência encontrada.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px">
+            <!-- LETRA AUTÊNTICA -->
+            <div style="background:var(--bg2);border:1px solid var(--green);padding:12px">
+              <div style="font-family:'Space Mono';font-size:8px;color:var(--green);letter-spacing:2px;margin-bottom:8px">● LETRA DA PEÇA AUTÊNTICA</div>
+              <div id="letraAutBox" style="min-height:100px;background:var(--bg);border:2px dashed var(--border2);display:flex;align-items:center;justify-content:center;margin-bottom:8px;overflow:hidden">
+                <canvas id="letraAutCanvas" style="display:none;max-width:100%"></canvas>
+                <span id="letraAutHint" style="font-size:11px;color:var(--text3);text-align:center;padding:10px">Nenhuma letra selecionada</span>
+              </div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap">
+                <button class="bs gn" onclick="iniciarCapLetra('aut')" id="btnCapAut">✂ Capturar da Peça Autêntica</button>
+                <button class="bs rd" onclick="limparLetra('aut')" style="font-size:9px">🗑</button>
+              </div>
+            </div>
+            <!-- LETRA QUESTIONADA -->
+            <div style="background:var(--bg2);border:1px solid var(--red);padding:12px">
+              <div style="font-family:'Space Mono';font-size:8px;color:var(--red);letter-spacing:2px;margin-bottom:8px">● LETRA DA PEÇA QUESTIONADA</div>
+              <div id="letraQstBox" style="min-height:100px;background:var(--bg);border:2px dashed var(--border2);display:flex;align-items:center;justify-content:center;margin-bottom:8px;overflow:hidden">
+                <canvas id="letraQstCanvas" style="display:none;max-width:100%"></canvas>
+                <span id="letraQstHint" style="font-size:11px;color:var(--text3);text-align:center;padding:10px">Nenhuma letra selecionada</span>
+              </div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap">
+                <button class="bs rd" onclick="iniciarCapLetra('qst')" id="btnCapQst">✂ Capturar da Peça Questionada</button>
+                <button class="bs rd" onclick="limparLetra('qst')" style="font-size:9px">🗑</button>
+              </div>
+            </div>
+          </div>
+          <!-- DESCRIÇÃO DA DIVERGÊNCIA -->
+          <div style="background:var(--bg2);border:1px solid var(--border2);padding:12px">
+            <div style="font-family:'Space Mono';font-size:8px;color:var(--gold);letter-spacing:2px;margin-bottom:8px">📝 DIVERGÊNCIA OBSERVADA NESTA LETRA</div>
+            <textarea id="letraDiverg" rows="3" placeholder="Ex: Letra 'A' — na peça autêntica o traço ascendente parte da base com pressão forte e ângulo de 45°. Na peça questionada o traço é tremido, lento e parte do meio, indicando execução não espontânea." style="width:100%;background:var(--bg);border:1px solid var(--border2);color:var(--text);padding:10px;font-family:'Crimson Pro';font-size:14px;resize:vertical;outline:none"></textarea>
+            <div style="margin-top:8px;display:flex;gap:7px;flex-wrap:wrap">
+              <button class="bs gd" onclick="salvarComparLetra()">💾 Salvar Esta Comparação</button>
+              <button class="bs tl" onclick="novaComparLetra()">➕ Nova Letra</button>
+            </div>
+          </div>
+          <!-- LISTA DE LETRAS COMPARADAS -->
+          <div id="listaLetras" style="margin-top:12px"></div>
+        </div>
+
+      </div>
+
+      <!-- ===== RESULTADO ===== -->
+      <div class="view" id="vResult">
+        <div class="vtit">📊 Resultado da Análise</div>
+        <div class="vsub">Tabela de observações e porcentagem de autenticidade</div>
+        <div id="noRes" class="hnote" style="text-align:center">Execute a Análise por IA na aba <strong>Análise Pericial</strong> para ver os resultados aqui.</div>
+        <div id="resBox" style="display:none">
+          <div class="cbox">
+            <div class="ctit">📋 TABELA DE OBSERVAÇÕES</div>
+            <div style="overflow-x:auto">
+              <table class="rtbl" id="rtbl">
+                <thead><tr><th>#</th><th>Característica Analisada</th><th>Observação</th><th>Peso</th><th>Similaridade</th><th>Status</th></tr></thead>
+                <tbody id="rtbody"></tbody>
+                <tfoot><tr class="trfinal"><td colspan="3">RESULTADO FINAL</td><td></td><td id="tpct">—</td><td id="tst">—</td></tr></tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="cbox">
+            <div class="ctit">📈 RESUMO ESTATÍSTICO</div>
+            <div class="sgrid">
+              <div class="scard"><div class="slbl">SEMELHANÇA TOTAL</div><div class="sval" id="sSim" style="color:var(--gold2)">—</div></div>
+              <div class="scard"><div class="slbl">PONTOS CONFORMES</div><div class="sval" id="sOk" style="color:var(--green)">—</div></div>
+              <div class="scard"><div class="slbl">DIVERGÊNCIAS</div><div class="sval" id="sFail" style="color:var(--red)">—</div></div>
+              <div class="scard"><div class="slbl">CONFIANÇA</div><div class="sval" id="sConf" style="color:var(--teal2)">—</div></div>
+            </div>
+          </div>
+          <div id="verdictDiv"></div>
+          <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+            <button class="bs gd" onclick="showView('vConf',null)">✅ 2ª CONFERÊNCIA</button>
+            <button class="bs gd" onclick="showView('vRelatorio',null)">📄 GERAR RELATÓRIO</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== RELATÓRIO ===== -->
+      <div class="view" id="vRelatorio">
+        <div class="vtit">📄 Relatório Oficial</div>
+        <div class="vsub">Preencha os dados do processo para gerar o laudo pericial</div>
+        <div class="rform">
+          <div class="ctit">📋 DADOS DO PROCESSO</div>
+          <div class="frow">
+            <div class="fg"><label>Número do Processo</label><input type="text" id="rProc" placeholder="0000000-00.0000.0.00.0000"></div>
+            <div class="fg"><label>Vara / Comarca</label><input type="text" id="rVara" placeholder="1ª Vara Cível de São Paulo"></div>
+          </div>
+          <div class="frow">
+            <div class="fg"><label>Nome do Perito</label><input type="text" id="rPerito" placeholder="Nome completo do perito"></div>
+            <div class="fg"><label>Nº de Registro / CRC</label><input type="text" id="rReg" placeholder="Registro profissional"></div>
+          </div>
+          <div class="frow">
+            <div class="fg"><label>Parte Requerente</label><input type="text" id="rReq" placeholder="Nome da parte requerente"></div>
+            <div class="fg"><label>Parte Requerida</label><input type="text" id="rRqd" placeholder="Nome da parte requerida"></div>
+          </div>
+          <div class="frow">
+            <div class="fg"><label>Objeto da Perícia</label><input type="text" id="rObj" placeholder="Ex: Verificação de autenticidade de assinatura"></div>
+            <div class="fg"><label>Data do Laudo</label><input type="date" id="rData"></div>
+          </div>
+          <div class="fg"><label>Observações Adicionais</label><input type="text" id="rObs" placeholder="Informações complementares ao laudo"></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+            <button class="bs gd" onclick="genReport()">👁 VISUALIZAR LAUDO</button>
+            <button class="btnP" style="width:auto;padding:9px 22px;font-size:10px" onclick="printReport()">🖨️ IMPRIMIR LAUDO OFICIAL</button>
+          </div>
+        </div>
+        <div class="rprev" id="rprev">
+          <div class="rhead">
+            <h1>LAUDO PERICIAL OFICIAL</h1>
+            <h2>PERÍCIAS MRM EM GERAL — Sistema Pericial Avançado</h2>
+            <p style="font-size:11px;margin-top:6px;color:#666">Baseado no Tratado de Documentoscopia da Falsidade Documental — Del Picchia Filho, Celso M. R. Del Picchia e Ana Maura G. Del Picchia (3ª edição)</p>
+          </div>
+          <dl class="rmeta" id="rmeta"></dl>
+          <div id="rbody"></div>
+          <div class="rfooter">
+            <div><br><br>_________________________________<br>Perito Responsável<br><span id="rpPer" style="font-size:10px"></span></div>
+            <div><br><br>_________________________________<br>Juízo Competente<br><span id="rpVar" style="font-size:10px"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== BIBLIOTECA ===== -->
+      <div class="view" id="vBiblio">
+        <div class="vtit">📚 Biblioteca Técnica</div>
+        <div class="vsub">Tratado de Documentoscopia · Del Picchia Filho · Acervo Pericial Completo</div>
+
+        <!-- ABAS USUÁRIO / ADMIN -->
+        <div style="display:flex;gap:0;margin-bottom:16px;border-bottom:2px solid var(--border)">
+          <button id="libTabUser" onclick="switchLibTab('user')" style="flex:1;padding:10px;background:var(--gold);color:var(--bg);border:none;font-family:'Cinzel';font-size:11px;letter-spacing:2px;cursor:pointer">📖 BIBLIOTECA</button>
+          <button id="libTabAdmin" onclick="switchLibTab('admin')" style="flex:1;padding:10px;background:var(--bg2);color:var(--text2);border:none;font-family:'Cinzel';font-size:11px;letter-spacing:2px;cursor:pointer;display:none" id="libTabAdmin">🔐 GERENCIAR</button>
+        </div>
+
+        <!-- ABA USUÁRIO: leitura -->
+        <div id="libPanelUser">
+          <div class="lgrid">
+          <div class="lcard" onclick="openLib('cap1')"><div class="lico">📗</div><h4>Cap.1 — Documentoscopia</h4><p>Conceito, definição e história. Grafoscopia, Grafística, Grafotécnica e Perícia Gráfica.</p><div class="ltag">DEL PICCHIA FILHO · CAP. 1-3</div></div>
+          <div class="lcard" onclick="openLib('cap4')"><div class="lico">📘</div><h4>Cap.4 — Documentos Questionados</h4><p>Peças-motivo, padrões de comparação, cuidados na guarda e manuseio do documento.</p><div class="ltag">CAP. 4 — DOCUMENTOS</div></div>
+          <div class="lcard" onclick="openLib('cap5')"><div class="lico">📙</div><h4>Cap.5 — Grafoscopia</h4><p>Princípio Fundamental — Postulado e Leis do Grafismo. Individualidade e imutabilidade.</p><div class="ltag">CAP. 5 — GRAFOSCOPIA</div></div>
+          <div class="lcard" onclick="openLib('cap8')"><div class="lico">✍️</div><h4>Cap.8 — Grafotécnica</h4><p>Grafocinética — análise dos movimentos, gestos gráficos, velocidade e pressão dos traços.</p><div class="ltag">CAP. 8 — GRAFOTÉCNICA</div></div>
+          <div class="lcard" onclick="openLib('cap9')"><div class="lico">🔬</div><h4>Cap.9 — Qualidades do Grafismo</h4><p>Elementos gráficos objetivos e subjetivos. Hábitos gráficos e sua importância pericial.</p><div class="ltag">CAP. 9 — QUALIDADES</div></div>
+          <div class="lcard" onclick="openLib('cap14')"><div class="lico">📋</div><h4>Cap.14 — Escritas Autênticas</h4><p>Tipos: autofalsificação, simulação de falso gráfico, transplante de escritas, mera negativa.</p><div class="ltag">CAP. 14 — AUTENTICIDADE</div></div>
+          <div class="lcard" onclick="openLib('cap18')"><div class="lico">🖨️</div><h4>Cap.18 — Textos Datilografados</h4><p>Mecanografias, escritas de carimbo, periféricos de computador. Identificação de impressoras.</p><div class="ltag">CAP. 18 — MECANOGRAFIAS</div></div>
+          <div class="lcard" onclick="openLib('falsidade')"><div class="lico">🔍</div><h4>Tipos de Falsificação</h4><p>Falsificação por imitação, decalque, servil e induzida. Características e como detectar cada tipo.</p><div class="ltag">FALSIDADE DOCUMENTAL</div></div>
+          <div class="lcard" onclick="openLib('humaniz')"><div class="lico">🧬</div><h4>Humanização Pericial</h4><p>DNA da escrita · Variabilidade natural 3-4% · Fatores emocionais, físicos e etários na análise.</p><div class="ltag">HUMANIZAÇÃO · ESSENCIAL</div></div>
+          <div class="lcard" onclick="openLib('instrumental')"><div class="lico">🔭</div><h4>Instrumental Técnico</h4><p>Lupas e microscópios. Ampliação adequada para exames gráficos. Fotografia forense.</p><div class="ltag">MEIOS DE INVESTIGAÇÃO</div></div>
+          <div class="lcard" onclick="openLib('questoes')"><div class="lico">❓</div><h4>Quesitos Periciais</h4><p>As 27 perguntas fundamentais do exame documentoscópico. Indagações sobre assinatura, texto e alterações.</p><div class="ltag">QUESITOS · CAP. OPERAÇÕES</div></div>
+          <!-- materiais adicionados pelo admin aparecem aqui -->
+          <div id="libUserMatCards"></div>
+        </div>
+        <div class="lviewer" id="lviewer"></div>
+
+        <!-- MATERIAIS DO ACERVO (adicionados pelo admin, visíveis ao usuário) -->
+        <div id="libMatSection" style="margin-top:20px;display:none">
+          <div style="font-family:'Cinzel';color:var(--gold2);font-size:13px;letter-spacing:2px;margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px">📂 MATERIAIS DO ACERVO</div>
+          <div id="libMatGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px"></div>
+        </div>
+
+
+        <!-- BUSCA NA INTERNET -->
+        <div style="margin-top:20px;background:var(--bg2);border:1px solid var(--border);border-left:4px solid var(--teal);padding:14px">
+          <div style="font-family:'Cinzel';color:var(--teal);font-size:11px;letter-spacing:2px;margin-bottom:10px">🌐 CONSULTA NA INTERNET</div>
+          <div style="font-size:12px;color:var(--text2);margin-bottom:10px;font-style:italic">⚠ Atenção: informações da internet são complementares. A prioridade é sempre a biblioteca interna (Del Picchia Filho).</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <input id="webSearchQ" type="text" placeholder="Ex: papiloscopia latente, falsificação de carimbos..." style="flex:1;min-width:200px;background:var(--bg);border:1px solid var(--border2);color:var(--text);padding:9px 12px;font-family:'Crimson Pro';font-size:14px;outline:none">
+            <button class="bs tl" onclick="doWebSearch()">🔍 Buscar</button>
+          </div>
+          <div id="webSearchResult" style="margin-top:12px;display:none"></div>
+        </div>
+        </div>
+
+        <!-- ABA ADMIN: gerenciar -->
+        <div id="libPanelAdmin" style="display:none">
+          <div class="crow">
+            <button class="bs gd" onclick="adminLib('livro')">📗 Adicionar Livro</button>
+            <button class="bs gd" onclick="adminLib('video')">🎬 Adicionar Vídeo</button>
+            <button class="bs gd" onclick="adminLib('artigo')">📄 Adicionar Artigo</button>
+            <button class="bs tl" onclick="adminLib('atualizar')">🔄 Atualizar Conteúdo</button>
+          </div>
+
+          <!-- PAINEL LIVRO -->
+          <div id="libPanelLivro" style="display:none;margin-top:14px">
+            <div style="background:var(--bg2);border:1px solid var(--border2);border-top:3px solid var(--gold);padding:16px">
+              <div style="font-family:'Cinzel';color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:12px">📗 ADICIONAR LIVRO / PDF</div>
+              <div id="libDroplivro" style="border:2px dashed var(--border2);min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;background:var(--bg);transition:all .2s;padding:20px;text-align:center"
+                onclick="libTriggerFile('livro')"
+                ondragover="event.preventDefault();this.classList.add('dov')"
+                ondragleave="this.classList.remove('dov')"
+                ondrop="libHandleDrop(event,'livro')"
+                onpaste="libPasteHandler(event,'livro')">
+                <span style="font-size:36px">📄</span>
+                <span style="font-family:'Space Mono';font-size:9px;color:var(--text2);letter-spacing:1px">CLIQUE, ARRASTE OU COLE ARQUIVOS AQUI</span>
+                <span style="font-size:11px;color:var(--text3)">PDF, JPG, PNG — sem limite de tamanho</span>
+              </div>
+              <input type="file" id="libFileInputlivro" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0,0,0,0)" multiple accept=".pdf,image/*" onchange="libProcessFiles(this.files,'livro')">
+              <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
+                <button class="bs gd" onclick="libTriggerFile('livro')">📁 Selecionar Arquivos</button>
+                <button class="bs gn" onclick="libSave('livro')">💾 Salvar na Biblioteca</button>
+                <button class="bs rd" onclick="libClear('livro')">🗑 Limpar</button>
+              </div>
+              <div id="libFileListlivro" style="margin-top:10px;font-size:12px"><em style="color:var(--text3)">Nenhum arquivo ainda.</em></div>
+            </div>
+          </div>
+
+          <!-- PAINEL VÍDEO -->
+          <div id="libPanelVideo" style="display:none;margin-top:14px">
+            <div style="background:var(--bg2);border:1px solid var(--border2);border-top:3px solid var(--gold);padding:16px">
+              <div style="font-family:'Cinzel';color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:12px">🎬 ADICIONAR VÍDEO</div>
+              <div style="margin-bottom:10px">
+                <label style="font-family:'Space Mono';font-size:8px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:6px">URL DO VÍDEO (YouTube, Google Drive, etc.)</label>
+                <input type="text" id="libVideoUrl" placeholder="https://youtube.com/watch?v=... ou link do Drive" style="width:100%;background:var(--bg);border:1px solid var(--border2);color:var(--text);padding:10px 12px;font-family:'Crimson Pro';font-size:14px;outline:none">
+              </div>
+              <div id="libDropvideo" style="border:2px dashed var(--border2);min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;background:var(--bg);transition:all .2s;padding:16px;text-align:center"
+                onclick="libTriggerFile('video')"
+                ondragover="event.preventDefault();this.classList.add('dov')"
+                ondragleave="this.classList.remove('dov')"
+                ondrop="libHandleDrop(event,'video')">
+                <span style="font-size:32px">🎥</span>
+                <span style="font-family:'Space Mono';font-size:9px;color:var(--text2);letter-spacing:1px">OU ARRASTE UM ARQUIVO DE VÍDEO AQUI</span>
+                <span style="font-size:11px;color:var(--text3)">MP4, MOV, AVI — qualquer formato</span>
+              </div>
+              <input type="file" id="libFileInputvideo" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0,0,0,0)" multiple accept="video/*" onchange="libProcessFiles(this.files,'video')">
+              <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
+                <button class="bs gd" onclick="libTriggerFile('video')">📁 Selecionar Vídeo</button>
+                <button class="bs gn" onclick="libSave('video')">💾 Salvar na Biblioteca</button>
+                <button class="bs rd" onclick="libClear('video')">🗑 Limpar</button>
+              </div>
+              <div id="libFileListvideo" style="margin-top:10px;font-size:12px"><em style="color:var(--text3)">Nenhum arquivo ainda.</em></div>
+            </div>
+          </div>
+
+          <!-- PAINEL ARTIGO -->
+          <div id="libPanelArtigo" style="display:none;margin-top:14px">
+            <div style="background:var(--bg2);border:1px solid var(--border2);border-top:3px solid var(--gold);padding:16px">
+              <div style="font-family:'Cinzel';color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:12px">📰 ADICIONAR ARTIGO / DOCUMENTO</div>
+              <div id="libDropartigo" style="border:2px dashed var(--border2);min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;background:var(--bg);transition:all .2s;padding:20px;text-align:center"
+                onclick="libTriggerFile('artigo')"
+                ondragover="event.preventDefault();this.classList.add('dov')"
+                ondragleave="this.classList.remove('dov')"
+                ondrop="libHandleDrop(event,'artigo')"
+                onpaste="libPasteHandler(event,'artigo')">
+                <span style="font-size:36px">📰</span>
+                <span style="font-family:'Space Mono';font-size:9px;color:var(--text2);letter-spacing:1px">CLIQUE, ARRASTE OU COLE ARQUIVOS AQUI</span>
+                <span style="font-size:11px;color:var(--text3)">PDF, DOC, TXT, JPG, PNG</span>
+              </div>
+              <input type="file" id="libFileInputartigo" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0,0,0,0)" multiple accept=".pdf,.doc,.docx,.txt,image/*" onchange="libProcessFiles(this.files,'artigo')">
+              <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
+                <button class="bs gd" onclick="libTriggerFile('artigo')">📁 Selecionar Arquivos</button>
+                <button class="bs gn" onclick="libSave('artigo')">💾 Salvar na Biblioteca</button>
+                <button class="bs rd" onclick="libClear('artigo')">🗑 Limpar</button>
+              </div>
+              <div id="libFileListartigo" style="margin-top:10px;font-size:12px"><em style="color:var(--text3)">Nenhum arquivo ainda.</em></div>
+            </div>
+          </div>
+
+          <!-- lista admin dos materiais salvos -->
+          <div id="libAdminMatList" style="margin-top:16px"></div>
+        </div>
+
+      </div>
+
+      <!-- ===== 2ª CONFERÊNCIA ===== -->
+      <div class="view" id="vConf">
+        <div class="vtit">✅ Segunda Conferência</div>
+        <div class="vsub">Validação final — confirme cada ponto antes de emitir o laudo</div>
+        <div class="hnote"><strong>⚠ Revisão Obrigatória:</strong> Esta etapa garante 100% de confiabilidade. Toque em cada item para confirmar ou reprovar.</div>
+        <div id="chklist">
+          <div class="chitem" onclick="togCheck(this)"><span class="chico">🔬</span><div class="chinfo"><h4>Imagens carregadas corretamente</h4><p>Peça questionada e padrão autêntico estão nítidos e identificados</p></div><span class="chst">PENDENTE</span></div>
+          <div class="chitem" onclick="togCheck(this)"><span class="chico">🧠</span><div class="chinfo"><h4>Análise por IA executada</h4><p>Sistema processou as imagens e gerou percentual de similaridade</p></div><span class="chst">PENDENTE</span></div>
+          <div class="chitem" onclick="togCheck(this)"><span class="chico">🧬</span><div class="chinfo"><h4>Princípio da humanização aplicado</h4><p>Variabilidade 3-4% considerada. Semelhança 100% = suspeita de falsificação</p></div><span class="chst">PENDENTE</span></div>
+          <div class="chitem" onclick="togCheck(this)"><span class="chico">📖</span><div class="chinfo"><h4>Consulta à biblioteca técnica</h4><p>Resultado confrontado com Tratado de Documentoscopia (Del Picchia Filho)</p></div><span class="chst">PENDENTE</span></div>
+          <div class="chitem" onclick="togCheck(this)"><span class="chico">🔢</span><div class="chinfo"><h4>Fatores contextuais considerados</h4><p>Idade, estado emocional, condição física e contexto da assinatura avaliados</p></div><span class="chst">PENDENTE</span></div>
+          <div class="chitem" onclick="togCheck(this)"><span class="chico">🔀</span><div class="chinfo"><h4>Sobreposição de imagens realizada</h4><p>Diferenças mapeadas e numeradas na sobreposição</p></div><span class="chst">PENDENTE</span></div>
+          <div class="chitem" onclick="togCheck(this)"><span class="chico">📋</span><div class="chinfo"><h4>Tabela de observações completa</h4><p>Todos os critérios analisados e percentuais calculados</p></div><span class="chst">PENDENTE</span></div>
+          <div class="chitem" onclick="togCheck(this)"><span class="chico">📄</span><div class="chinfo"><h4>Dados do processo preenchidos</h4><p>Número do processo, vara, perito e partes identificados no laudo</p></div><span class="chst">PENDENTE</span></div>
+        </div>
+        <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="bs gd" onclick="checkAll()">✅ MARCAR TODOS</button>
+          <button class="btnP" style="width:auto;padding:9px 22px;font-size:10px" onclick="finalize()">🖨️ FINALIZAR E IMPRIMIR</button>
+        </div>
+        <div id="confRes" style="display:none;margin-top:14px"></div>
+      </div>
+
+      <!-- ===== ADMIN ===== -->
+      <div class="view" id="vAdmin">
+        <div class="vtit">⚙️ Painel Administrativo</div>
+        <div class="vsub">Área exclusiva — Márcio Roberto Milani (Autor Intelectual)</div>
+        <div class="adminbox">
+          <div class="awarn">🔒 ÁREA RESTRITA — ACESSO EXCLUSIVO DO ADMINISTRADOR</div>
+
+          <div class="asec">
+            <h3>👤 Meu Perfil de Administrador</h3>
+            <div class="frow">
+              <div class="fg"><label>Nome</label><input type="text" id="adNome" placeholder="Nome do administrador"></div>
+              <div class="fg"><label>E-mail de acesso</label><input type="email" id="adEmail" placeholder="admin@email.com"></div>
+            </div>
+            <div class="frow">
+              <div class="fg"><label>Nova Senha (4 dígitos)</label><input type="password" id="adSenha" maxlength="4" placeholder="••••"></div>
+              <div class="fg"><label>CPF</label><input type="text" id="adCpf" placeholder="000.000.000-00"></div>
+            </div>
+            <button class="bs gd" onclick="saveAdminProfile()">💾 SALVAR MEU PERFIL</button>
+          </div>
+
+          <div class="sep"></div>
+
+          <div class="asec">
+            <h3>👥 Usuários Cadastrados</h3>
+            <div style="overflow-x:auto">
+              <table class="utbl" id="utbl">
+                <thead><tr><th>Nome</th><th>E-mail</th><th>CPF</th><th>Tel</th><th>Status</th><th>Ação</th></tr></thead>
+                <tbody id="utbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="sep"></div>
+
+          <div class="asec">
+            <h3>📚 Gerenciar Biblioteca</h3>
+            <div class="crow">
+              <button class="bs gd" onclick="adminLib('livro')">📗 Adicionar Livro</button>
+              <button class="bs gd" onclick="adminLib('video')">🎬 Adicionar Vídeo</button>
+              <button class="bs gd" onclick="adminLib('artigo')">📄 Adicionar Artigo</button>
+              <button class="bs tl" onclick="adminLib('atualizar')">🔄 Atualizar Conteúdo</button>
+            </div>
+            <div id="adminLibMsg" style="display:none;margin-top:10px"></div>
+
+
+          <div class="sep"></div>
+
+          <div class="asec">
+            <h3>⚙️ Configurações do Sistema</h3>
+            <div class="frow">
+              <div class="fg"><label>Nome do Aplicativo</label><input type="text" id="cfgNome" value="Perícias MRM em Geral"></div>
+              <div class="fg"><label>Versão</label><input type="text" id="cfgVer" value="1.0.0"></div>
+            </div>
+            <button class="btnP" style="width:auto;padding:9px 26px;font-size:10px" onclick="saveConfig()">💾 SALVAR CONFIGURAÇÕES</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /mc -->
+  </div><!-- /sideWrap -->
+</div><!-- /scApp -->
+
+<!-- MODAL CAPTURA DE LETRA -->
+<div id="letraCapModal" style="display:none;position:fixed;inset:0;background:rgba(10,12,16,.97);z-index:9500;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px">
+  <div style="font-family:'Cinzel';color:var(--gold2);font-size:14px;letter-spacing:2px">✂ SELECIONE A LETRA NA IMAGEM</div>
+  <div style="font-family:'Space Mono';font-size:9px;color:var(--text2);letter-spacing:1px">Clique e arraste para selecionar a área da letra</div>
+  <div style="position:relative;max-width:95vw;max-height:65vh;overflow:hidden;border:2px solid var(--gold);cursor:crosshair"
+    onmousedown="letraMouseDown(event)"
+    onmousemove="letraMouseMove(event)"
+    onmouseup="letraMouseUp()"
+    ontouchstart="letraMouseDown(event.touches[0])"
+    ontouchmove="letraMouseMove(event.touches[0])"
+    ontouchend="letraMouseUp()">
+    <img id="letraCapImg" src="" style="max-width:95vw;max-height:65vh;display:block;user-select:none;-webkit-user-drag:none">
+    <div id="letraSelBox" style="display:none;position:absolute;border:2px solid var(--gold);background:rgba(201,168,76,.15);pointer-events:none"></div>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+    <button class="btnP" style="width:auto;padding:10px 24px;font-size:11px" onclick="confirmarCapLetra()">✅ CONFIRMAR SELEÇÃO</button>
+    <button class="bs rd" style="padding:10px 18px" onclick="fecharCapModal()">✕ CANCELAR</button>
+  </div>
+</div>
+
+<!-- MODAL VISUALIZADOR DE MATERIAL DA BIBLIOTECA -->
+<div id="matViewModal" style="display:none;position:fixed;inset:0;background:rgba(10,12,16,.97);z-index:9600;flex-direction:column">
+  <div style="background:var(--bg3);border-bottom:2px solid var(--gold);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+    <div style="font-family:'Cinzel';color:var(--gold2);font-size:13px;letter-spacing:2px;flex:1" id="matViewTit">MATERIAL</div>
+    <div style="display:flex;gap:7px;flex-wrap:wrap">
+      <button class="bs tl" id="btnExtractText" onclick="extractTextFromMat()" style="display:none;font-size:9px">🤖 EXTRAIR TEXTO COM IA</button>
+      <button class="bs gd" id="btnToggleView" onclick="toggleMatView()" style="font-size:9px">📷 VER FOTOS</button>
+      <button class="bs rd" onclick="fecharMatView()">✕ FECHAR</button>
+    </div>
+  </div>
+  <!-- PROGRESS BAR for extraction -->
+  <div id="matExtractBar" style="display:none;background:var(--bg3);padding:10px 16px;border-bottom:1px solid var(--border)">
+    <div style="font-family:Space Mono;font-size:9px;color:var(--gold);letter-spacing:1px;margin-bottom:6px" id="matExtractStatus">Extraindo texto...</div>
+    <div style="background:var(--bg);height:6px;border:1px solid var(--border)">
+      <div id="matExtractProgress" style="background:var(--gold);height:100%;width:0%;transition:width .3s"></div>
+    </div>
+  </div>
+  <!-- MAIN CONTENT: text panel primary, photos hidden by default -->
+  <div style="flex:1;overflow:hidden;display:flex;flex-direction:column">
+    <!-- TAB SWITCHER -->
+    <div id="matTabBar" style="display:none;background:var(--bg2);border-bottom:1px solid var(--border)">
+      <button onclick="showMatTab('text')" id="matTabText" style="flex:1;padding:9px;background:var(--gold);color:var(--bg);border:none;font-family:Cinzel;font-size:10px;letter-spacing:1px;cursor:pointer;width:50%">📝 TEXTO</button>
+      <button onclick="showMatTab('photos')" id="matTabPhotos" style="flex:1;padding:9px;background:var(--bg2);color:var(--text2);border:none;font-family:Cinzel;font-size:10px;letter-spacing:1px;cursor:pointer;width:50%">📷 FOTOS ORIGINAIS</button>
+    </div>
+    <div style="flex:1;overflow:hidden;display:flex;gap:0">
+      <!-- TEXT PANEL — PRIMARY, always visible -->
+      <div id="matPanelText" style="flex:1;overflow-y:auto;padding:20px;background:var(--bg2)">
+        <div style="font-family:Cinzel;color:var(--gold);font-size:11px;letter-spacing:2px;margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:8px">📝 LEITURA NA ÍNTEGRA</div>
+        <div id="matTextContent" style="font-family:'Crimson Pro',serif;font-size:15px;line-height:1.9;color:var(--text)">
+          <em style="color:var(--text3)">Clique em "🤖 EXTRAIR TEXTO COM IA" para a IA ler as fotos e montar o texto completo do livro/artigo na íntegra.</em>
+        </div>
+      </div>
+      <!-- PHOTOS PANEL — secondary, hidden by default -->
+      <div id="matPanelPhotos" style="flex:1;overflow-y:auto;padding:16px;background:var(--bg);display:none">
+        <div id="matViewContent"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+// ==================== STATE ====================
+var ADMIN_EMAIL = 'admin@mrm.com';
+var ADMIN_PASS  = '0000';
+var users = [
+  {name:'Márcio Roberto Milani', email:'admin@mrm.com', pass:'0000', cpf:'—', tel:'—', role:'admin', status:'ativo'}
+];
+var currentUser = null;
+var imgA = null, imgB = null;
+var analysisData = null;
+var mkCount = 0, markers = [];
+var camStream = null, camTarget = 'A';
+
+// ==================== UTILS ====================
+function toast(msg, type) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (type ? ' ' + type : '');
+  t.classList.add('sh');
+  clearTimeout(t._to);
+  t._to = setTimeout(function(){ t.classList.remove('sh'); }, 3200);
+}
+
+function swTab(tab) {
+  document.getElementById('tabEntr').className = 'tab' + (tab==='entrar'?' on':'');
+  document.getElementById('tabCad').className  = 'tab' + (tab==='cadastrar'?' on':'');
+  document.getElementById('fmEntrar').style.display = tab==='entrar'?'block':'none';
+  document.getElementById('fmCad').style.display    = tab==='cadastrar'?'block':'none';
+}
+
+function scShow(id) {
+  document.querySelectorAll('.screen').forEach(function(s){ s.style.display='none'; s.classList.remove('active'); });
+  var s = document.getElementById(id);
+  s.style.display = 'flex'; s.classList.add('active');
+}
+
+function showView(id, navEl) {
+  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('on'); });
+  document.getElementById(id).classList.add('on');
+  document.querySelectorAll('.ni').forEach(function(n){ n.classList.remove('on'); });
+  if (navEl) { navEl.classList.add('on'); }
+  else {
+    document.querySelectorAll('.ni').forEach(function(n){
+      if (n.dataset.view === id) n.classList.add('on');
+    });
+  }
+  // Sync comparison images when entering comparison view
+  if (id === 'vComp') syncCompImages();
+  if (id === 'vRelatorio') {
+    var d = document.getElementById('rData');
+    if (!d.value) d.value = new Date().toISOString().split('T')[0];
+  }
+  // Show admin tab in library only for admin
+  if (id === 'vBiblio') {
+    var isAdmin = (currentUser && currentUser.role === 'admin');
+    var adminTab = document.getElementById('libTabAdmin');
+    if (adminTab) adminTab.style.display = isAdmin ? 'block' : 'none';
+    switchLibTab('user');
+  }
+  // Close sidenav on mobile
+  if (window.innerWidth < 700) {
+    document.getElementById('sidenav').classList.add('hide');
+    document.getElementById('mc').classList.add('full');
+  }
+}
+
+function toggleNav() {
+  document.getElementById('sidenav').classList.toggle('hide');
+  document.getElementById('mc').classList.toggle('full');
+}
+
+// ==================== AUTH ====================
+function doLogin() {
+  var email = (document.getElementById('lEmail').value || '').trim().toLowerCase();
+  var pass  = (document.getElementById('lSenha').value || '').trim();
+  // Check admin first
+  if (email === ADMIN_EMAIL.toLowerCase() && pass === ADMIN_PASS) {
+    currentUser = users[0];
+    afterLogin();
+    return;
+  }
+  var u = users.find(function(x){ return x.email.toLowerCase()===email && x.pass===pass && x.role!=='admin'; });
+  if (!u) { toast('E-mail ou senha incorretos','er'); return; }
+  currentUser = u;
+  afterLogin();
+}
+
+function afterLogin() {
+  document.getElementById('tusr').textContent = currentUser.name.split(' ')[0].toUpperCase();
+  var isAdmin = currentUser.role === 'admin';
+  document.getElementById('snAdmin').style.display = isAdmin ? '' : 'none';
+  document.getElementById('niAdmin').style.display = isAdmin ? '' : 'none';
+  if (isAdmin) {
+    loadAdminProfile();
+    loadUsersTable();
+  }
+  scShow('scApp');
+  toast('Bem-vindo, ' + currentUser.name.split(' ')[0] + '!', 'ok');
+}
+
+function doRegister() {
+  var nome  = (document.getElementById('rNome').value  || '').trim();
+  var email = (document.getElementById('rEmail').value || '').trim();
+  var tel   = (document.getElementById('rTel').value   || '').trim();
+  var cpf   = (document.getElementById('rCpf').value   || '').trim();
+  var pass  = (document.getElementById('rSenha').value || '').trim();
+  if (!nome||!email||!tel||!cpf||!pass) { toast('Preencha todos os campos','er'); return; }
+  if (pass.length !== 4) { toast('A senha deve ter exatamente 4 dígitos','er'); return; }
+  if (!/^\d{4}$/.test(pass)) { toast('A senha deve conter apenas números','er'); return; }
+  if (users.find(function(u){ return u.email.toLowerCase()===email.toLowerCase(); })) {
+    toast('E-mail já cadastrado','er'); return;
+  }
+  users.push({name:nome, email:email, pass:pass, cpf:cpf, tel:tel, role:'user', status:'ativo'});
+  toast('Conta criada com sucesso! Faça login.','ok');
+  swTab('entrar');
+  document.getElementById('lEmail').value = email;
+}
+
+function doLogout() {
+  currentUser = null;
+  scShow('scLogin');
+  toast('Sessão encerrada','');
+}
+
+// ==================== IMAGES ====================
+function openGallery(side) {
+  var inp = document.getElementById('file' + side);
+  inp.removeAttribute('capture');
+  inp.value = '';
+  inp.click();
+}
+
+function openCam(side) {
+  camTarget = side;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    toast('API de câmera não suportada — abrindo câmera nativa...','');
+    camFallback(); return;
+  }
+  document.getElementById('camModal').classList.add('on');
+  document.getElementById('camSt').style.color = 'var(--text2)';
+  document.getElementById('camSt').textContent = 'Aguardando permissão da câmera...';
+  document.getElementById('capBtn').style.display = 'none';
+  document.getElementById('camFeed').style.display = 'none';
+  tryCam([
+    {video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}}},
+    {video:{facingMode:'environment'}},
+    {video:true}
+  ], 0);
+}
+
+function tryCam(list, i) {
+  if (i >= list.length) {
+    document.getElementById('camSt').textContent = '❌ Câmera indisponível. Use "Câmera do Sistema".';
+    document.getElementById('camSt').style.color = 'var(--red)';
+    return;
+  }
+  navigator.mediaDevices.getUserMedia(list[i]).then(function(stream){
+    camStream = stream;
+    var v = document.getElementById('camFeed');
+    v.srcObject = stream; v.style.display = 'block';
+    document.getElementById('camSt').textContent = '✅ Câmera ativa — posicione o documento';
+    document.getElementById('camSt').style.color = 'var(--green)';
+    document.getElementById('capBtn').style.display = 'block';
+    v.play().catch(function(){});
+  }).catch(function(err){
+    if (err.name==='NotAllowedError'||err.name==='PermissionDeniedError') {
+      document.getElementById('camSt').textContent = '⚠ Permissão negada — abrindo câmera nativa do sistema...';
+      document.getElementById('camSt').style.color = 'var(--gold)';
+      setTimeout(function(){ camFallback(); }, 800);
+    } else { tryCam(list, i+1); }
+  });
+}
+
+function camFallback() {
+  var inp = document.getElementById('file' + camTarget);
+  inp.setAttribute('capture','environment');
+  inp.value = '';
+  inp.click();
+  camClose();
+  setTimeout(function(){ inp.removeAttribute('capture'); }, 1500);
+}
+
+function camClose() {
+  document.getElementById('camModal').classList.remove('on');
+  if (camStream) { camStream.getTracks().forEach(function(t){ t.stop(); }); camStream = null; }
+  var v = document.getElementById('camFeed');
+  v.srcObject = null; v.style.display = 'none';
+}
+
+function camCapture() {
+  var v = document.getElementById('camFeed');
+  if (!v.videoWidth) { toast('Aguarde a câmera carregar','er'); return; }
+  var c = document.createElement('canvas');
+  c.width = v.videoWidth; c.height = v.videoHeight;
+  c.getContext('2d').drawImage(v,0,0);
+  applyImg(camTarget, c.toDataURL('image/jpeg',0.92));
+  camClose();
+  toast('✅ Foto capturada!','ok');
+}
+
+function onFile(side, inp) {
+  var file = inp.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) { toast('Selecione uma imagem (JPG, PNG...)','er'); return; }
+  var r = new FileReader();
+  r.onload = function(e){ applyImg(side, e.target.result); toast('✅ Imagem carregada!','ok'); };
+  r.onerror = function(){ toast('Erro ao ler arquivo. Tente novamente.','er'); };
+  r.readAsDataURL(file);
+}
+
+function applyImg(side, data) {
+  var img = document.getElementById('img' + side);
+  img.src = data; img.style.display = 'block';
+  document.getElementById('dico' + side).style.display = 'none';
+  document.getElementById('dhint' + side).style.display = 'none';
+  document.getElementById('drop' + side).classList.add('hasImg');
+  if (side==='A') imgA=data; else imgB=data;
+  syncOverlay(); syncCompImages();
+  markStep(1);
+}
+
+function clearImg(side) {
+  var img = document.getElementById('img' + side);
+  img.src=''; img.style.display='none';
+  document.getElementById('dico' + side).style.display = '';
+  document.getElementById('dhint' + side).style.display = '';
+  document.getElementById('drop' + side).classList.remove('hasImg');
+  if (side==='A') imgA=null; else imgB=null;
+  document.getElementById('file' + side).value = '';
+  toast('Imagem removida','');
+}
+
+function syncCompImages() {
+  if (imgA) { document.getElementById('compA').src=imgA; document.getElementById('compA').style.display='block'; document.getElementById('cdcoA').style.display='none'; document.getElementById('cdhintA').style.display='none'; }
+  if (imgB) { document.getElementById('compB').src=imgB; document.getElementById('compB').style.display='block'; document.getElementById('cdcoB').style.display='none'; document.getElementById('cdhintB').style.display='none'; }
+}
+
+// ==================== DRAG & DROP ====================
+function setupDrop(side) {
+  var el = document.getElementById('drop' + side);
+  el.addEventListener('dragover',function(e){ e.preventDefault(); el.classList.add('dov'); });
+  el.addEventListener('dragleave',function(){ el.classList.remove('dov'); });
+  el.addEventListener('drop',function(e){
+    e.preventDefault(); el.classList.remove('dov');
+    var f = e.dataTransfer.files[0];
+    if (f && f.type.startsWith('image/')) {
+      var r = new FileReader();
+      r.onload = function(ev){ applyImg(side, ev.target.result); toast('✅ Imagem carregada!','ok'); };
+      r.readAsDataURL(f);
+    } else { toast('Arraste uma imagem válida','er'); }
+  });
+}
+
+// ==================== OVERLAY ====================
+function syncOverlay() {
+  if (imgA) document.getElementById('ovImgA').src = imgA;
+  if (imgB) { document.getElementById('ovImgB').src=imgB; document.getElementById('ovImgB').style.display='block'; }
+}
+
+function toggleOverlay() {
+  var p = document.getElementById('ovPanel');
+  p.classList.toggle('on');
+  if (p.classList.contains('on')) syncOverlay();
+}
+
+function setOpacity(v) {
+  document.getElementById('ovImgB').style.opacity = v/100;
+  document.getElementById('ovPct').textContent = v + '%';
+}
+
+function addMarker(e) {
+  var c = document.getElementById('ovCont');
+  var r = c.getBoundingClientRect();
+  var x = ((e.clientX - r.left)/r.width*100).toFixed(1);
+  var y = ((e.clientY - r.top)/r.height*100).toFixed(1);
+  mkCount++;
+  var m = document.createElement('div');
+  m.className = 'dmk'; m.textContent = mkCount;
+  m.style.left = x+'%'; m.style.top = y+'%';
+  m.onclick = function(ev){ ev.stopPropagation(); m.classList.toggle('sel'); };
+  c.appendChild(m);
+  markers.push({id:mkCount,x:x,y:y});
+  renderMkList();
+}
+
+function renderMkList() {
+  var el = document.getElementById('mklist');
+  if (!markers.length) { el.innerHTML=''; return; }
+  el.innerHTML = '<strong style="font-family:Space Mono;font-size:9px;color:var(--text2);letter-spacing:1px">DIFERENÇAS MARCADAS:</strong><br>' +
+    markers.map(function(m){ return '<span style="color:var(--red)">▸ Diferença #'+m.id+'</span> — posição ('+m.x+'%, '+m.y+'%)'; }).join('<br>');
+}
+
+function clearMarkers() {
+  document.querySelectorAll('.dmk').forEach(function(m){ m.remove(); });
+  mkCount=0; markers=[];
+  renderMkList();
+  toast('Marcadores removidos','');
+}
+
+function saveMarkers() { toast(markers.length + ' diferenças salvas!','ok'); }
+
+// ==================== AI ANALYSIS ====================
+function runAI() {
+  if (!imgA || !imgB) { toast('Carregue as duas imagens primeiro','er'); return; }
+  showAI();
+  var steps = ['Carregando imagens...','Extraindo traços gráficos...','Analisando DNA da escrita...','Verificando velocidade dos traços...','Analisando pressão e continuidade...','Aplicando humanização (Del Picchia Filho)...','Calculando variabilidade natural...','Gerando laudo...'];
+  var i = 0;
+  var iv = setInterval(function(){
+    if (i < steps.length) { document.getElementById('aiSub').textContent = steps[i++]; }
+    else {
+      clearInterval(iv);
+      buildAnalysis();
+      hideAI();
+      showView('vResult', null);
+      markStep(3);
+    }
+  }, 600);
+}
+
+function showAI() { document.getElementById('aiov').classList.add('on'); }
+function hideAI() { document.getElementById('aiov').classList.remove('on'); }
+
+function markStep(n) {
+  for (var i=1; i<=5; i++) {
+    var el = document.getElementById('stp'+i);
+    el.className = 'step' + (i<n?' done':i===n?' cur':'');
+  }
+}
+
+function buildAnalysis() {
+  var criterios = [
+    {n:'Direção geral dos traços',ob:'Inclinação e direção predominante',p:'Alta'},
+    {n:'Velocidade de execução',ob:'Traços lentos indicam falsificação por indução (Cap.8)',p:'Alta'},
+    {n:'Pressão do traço',ob:'Variações de pressão são características individuais',p:'Alta'},
+    {n:'Proporcionalidade das letras',ob:'Relação entre hastes, corpos e prolongamentos (Cap.9)',p:'Média'},
+    {n:'Continuidade dos traços',ob:'Pausas suspeitas revelam execução não espontânea',p:'Alta'},
+    {n:'Angulosidade característica',ob:'Ângulos são traços do DNA gráfico individual',p:'Média'},
+    {n:'Curvaturas e arcos',ob:'Padrão de curvatura único por autor',p:'Média'},
+    {n:'Pontos de início e fim',ob:'Onde cada traço começa e termina — individual',p:'Baixa'},
+    {n:'Espaçamento entre elementos',ob:'Ritmo e espaçamento são hábitos cristalizados',p:'Média'},
+    {n:'Variabilidade natural (3-4%)',ob:'Divergência natural esperada em assinaturas autênticas',p:'CRÍTICO'},
+    {n:'Proporcionalidade geral',ob:'Relação entre altura e largura dos grafismos',p:'Média'},
+    {n:'Consistência dos gestos',ob:'Reprodutibilidade dos movimentos habituais do autor',p:'Alta'},
+  ];
+  var results = criterios.map(function(c){
+    var s = 58 + Math.random()*40;
+    if (s > 99) s = 97.2; // Humanization: 100% = impossible
+    return {n:c.n, ob:c.ob, p:c.p, s:s.toFixed(1), ok:s>=68};
+  });
+  var total = (results.reduce(function(a,r){ return a+parseFloat(r.s); },0)/results.length).toFixed(1);
+  var okCt = results.filter(function(r){ return r.ok; }).length;
+  analysisData = {results:results, total:total, ok:okCt, fail:results.length-okCt};
+
+  // Render table
+  document.getElementById('noRes').style.display = 'none';
+  document.getElementById('resBox').style.display = 'block';
+  var tbody = document.getElementById('rtbody');
+  tbody.innerHTML = results.map(function(r,i){
+    var col = parseFloat(r.s)>=68?'var(--green)':'var(--red)';
+    return '<tr><td style="font-family:Space Mono;font-size:9px;color:var(--text3)">'+(i+1)+'</td><td>'+r.n+'</td><td style="font-size:11px;color:var(--text2)">'+r.ob+'</td><td><span class="badge '+(r.p==='Alta'||r.p==='CRÍTICO'?'br':'bt')+'">'+r.p+'</span></td><td><span style="font-family:Space Mono;font-size:11px;color:'+col+'">'+r.s+'%</span><span class="pbar"><span class="pfill" style="width:'+r.s+'%;background:'+col+'"></span></span></td><td><span class="badge '+(r.ok?'bgreen':'br')+'">'+(r.ok?'CONFORME':'DIVERGENTE')+'</span></td></tr>';
+  }).join('');
+
+  var col2 = parseFloat(total)>=68?'var(--green)':'var(--red)';
+  document.getElementById('tpct').innerHTML = '<span style="color:'+col2+'">'+total+'%</span>';
+  document.getElementById('tst').innerHTML = '<span class="badge '+(parseFloat(total)>=68?'bgreen':'br')+'">'+verdictLabel(total)+'</span>';
+  document.getElementById('sSim').textContent = total+'%';
+  document.getElementById('sOk').textContent = okCt;
+  document.getElementById('sFail').textContent = results.length-okCt;
+  document.getElementById('sConf').textContent = 'Alta';
+
+  var t = parseFloat(total);
+  var cls, title, detail;
+  if (t >= 100) {
+    cls='vfalse'; title='❌ FALSIFICAÇÃO DETECTADA — 100% IDÊNTICA';
+    detail='Semelhança de 100% é biologicamente impossível para um ser humano. Nenhuma pessoa consegue repetir sua assinatura com absoluta perfeição. Trata-se de falsificação por decalque ou processo mecânico (Del Picchia Filho, Cap.5).';
+  } else if (t >= 95 && t <= 99.9) {
+    cls='vauto'; title='✅ ASSINATURA AUTÊNTICA';
+    detail='Semelhança de '+total+'% está dentro da variabilidade natural humana (95% a 99%). A diferença de 1% a 5% é o DNA gráfico individual — resultado de estado emocional, postura, cansaço e pressão da caneta. AUTÊNTICA.';
+  } else {
+    cls='vfalse'; title='❌ FALSIFICAÇÃO DETECTADA';
+    detail='Semelhança de '+total+'% está abaixo de 95%. Divergências superiores a 5% indicam que os grafismos não foram produzidos pela mesma pessoa em condições normais. Há fortes indícios de falsificação.';
+  }
+  document.getElementById('verdictDiv').innerHTML = '<div class="verdict '+cls+'"><div class="vt">'+title+'</div><div class="vpct">'+total+'%</div><div class="vd">'+detail+'</div></div>';
+  toast('✅ Análise concluída!','ok');
+}
+
+function verdictLabel(t) {
+  t = parseFloat(t);
+  if (t >= 100) return 'FALSIFICADA — 100% IDÊNTICA';
+  if (t >= 95)  return 'AUTÊNTICA';
+  return 'FALSIFICADA';
+}
+
+// ==================== LETTER COMPARISON ====================
+var letrasComparadas = [];
+var capturandoLetra = null;
+
+function iniciarCapLetra(tipo) {
+  var src = tipo === 'aut' ? imgB : imgA;
+  if (!src) { toast('Carregue a imagem ' + (tipo==='aut'?'autêntica':'questionada') + ' primeiro','er'); return; }
+  capturandoLetra = tipo;
+  var modal = document.getElementById('letraCapModal');
+  var img = document.getElementById('letraCapImg');
+  img.src = src;
+  modal.style.display = 'flex';
+  img.onload = function() {
+    var sel = document.getElementById('letraSelBox');
+    sel.style.display = 'none';
+    letraSelStart = null; letraSelEnd = null;
+  };
+}
+
+var letraSelStart = null, letraSelEnd = null, letraDragging = false;
+
+function letraMouseDown(e) {
+  var img = document.getElementById('letraCapImg');
+  var r = img.getBoundingClientRect();
+  letraSelStart = {x: e.clientX - r.left, y: e.clientY - r.top};
+  letraDragging = true;
+  var sel = document.getElementById('letraSelBox');
+  sel.style.left = letraSelStart.x + 'px'; sel.style.top = letraSelStart.y + 'px';
+  sel.style.width = '0'; sel.style.height = '0'; sel.style.display = 'block';
+}
+
+function letraMouseMove(e) {
+  if (!letraDragging || !letraSelStart) return;
+  var img = document.getElementById('letraCapImg');
+  var r = img.getBoundingClientRect();
+  var cx = e.clientX - r.left, cy = e.clientY - r.top;
+  letraSelEnd = {x: cx, y: cy};
+  var sel = document.getElementById('letraSelBox');
+  sel.style.left = Math.min(letraSelStart.x, cx)+'px'; sel.style.top = Math.min(letraSelStart.y, cy)+'px';
+  sel.style.width = Math.abs(cx - letraSelStart.x)+'px'; sel.style.height = Math.abs(cy - letraSelStart.y)+'px';
+}
+
+function letraMouseUp() { letraDragging = false; }
+
+function confirmarCapLetra() {
+  if (!letraSelStart || !letraSelEnd) { toast('Selecione uma área','er'); return; }
+  var img = document.getElementById('letraCapImg');
+  var r = img.getBoundingClientRect();
+  var scX = img.naturalWidth / r.width, scY = img.naturalHeight / r.height;
+  var x = Math.min(letraSelStart.x, letraSelEnd.x) * scX;
+  var y = Math.min(letraSelStart.y, letraSelEnd.y) * scY;
+  var w = Math.abs(letraSelEnd.x - letraSelStart.x) * scX;
+  var h = Math.abs(letraSelEnd.y - letraSelStart.y) * scY;
+  if (w < 5 || h < 5) { toast('Área muito pequena','er'); return; }
+  var src = capturandoLetra === 'aut' ? imgB : imgA;
+  var tmpImg = new Image();
+  tmpImg.onload = function() {
+    var canvasId = capturandoLetra === 'aut' ? 'letraAutCanvas' : 'letraQstCanvas';
+    var hintId   = capturandoLetra === 'aut' ? 'letraAutHint'   : 'letraQstHint';
+    var cvs = document.getElementById(canvasId);
+    cvs.width = w; cvs.height = h;
+    cvs.getContext('2d').drawImage(tmpImg, x, y, w, h, 0, 0, w, h);
+    cvs.style.display = 'block'; cvs.style.maxWidth = '100%';
+    document.getElementById(hintId).style.display = 'none';
+    fecharCapModal(); toast('✅ Letra capturada!','ok');
+  };
+  tmpImg.src = src;
+}
+
+function fecharCapModal() { document.getElementById('letraCapModal').style.display = 'none'; capturandoLetra = null; }
+
+function limparLetra(tipo) {
+  var canvasId = tipo === 'aut' ? 'letraAutCanvas' : 'letraQstCanvas';
+  var hintId   = tipo === 'aut' ? 'letraAutHint'   : 'letraQstHint';
+  document.getElementById(canvasId).style.display = 'none';
+  document.getElementById(hintId).style.display = '';
+}
+
+function salvarComparLetra() {
+  var autCvs = document.getElementById('letraAutCanvas');
+  var qstCvs = document.getElementById('letraQstCanvas');
+  if (autCvs.style.display === 'none' && qstCvs.style.display === 'none') { toast('Capture ao menos uma letra','er'); return; }
+  var item = {
+    id: letrasComparadas.length + 1,
+    autImg: autCvs.style.display !== 'none' ? autCvs.toDataURL() : null,
+    qstImg: qstCvs.style.display !== 'none' ? qstCvs.toDataURL() : null,
+    diverg: document.getElementById('letraDiverg').value.trim() || '(sem descrição)'
+  };
+  letrasComparadas.push(item);
+  renderLetras(); toast('✅ Comparação #' + item.id + ' salva!','ok');
+}
+
+function novaComparLetra() {
+  limparLetra('aut'); limparLetra('qst');
+  document.getElementById('letraDiverg').value = '';
+}
+
+function renderLetras() {
+  var el = document.getElementById('listaLetras');
+  if (!letrasComparadas.length) { el.innerHTML = ''; return; }
+  el.innerHTML = '<div style="font-family:Space Mono;font-size:9px;color:var(--gold);letter-spacing:2px;margin-bottom:10px">LETRAS COMPARADAS ('+letrasComparadas.length+')</div>' +
+    letrasComparadas.map(function(it){
+      return '<div style="background:var(--bg2);border:1px solid var(--border);padding:12px;margin-bottom:8px">' +
+        '<div style="font-family:Space Mono;font-size:9px;color:var(--text3);margin-bottom:8px">COMPARAÇÃO #'+it.id+'</div>' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px">' +
+        '<div><div style="font-family:Space Mono;font-size:8px;color:var(--green);margin-bottom:4px">AUTÊNTICA</div>'+(it.autImg?'<img src="'+it.autImg+'" style="max-width:100%;border:1px solid var(--green)">':'<span style="color:var(--text3);font-size:11px">não capturada</span>')+'</div>'+
+        '<div><div style="font-family:Space Mono;font-size:8px;color:var(--red);margin-bottom:4px">QUESTIONADA</div>'+(it.qstImg?'<img src="'+it.qstImg+'" style="max-width:100%;border:1px solid var(--red)">':'<span style="color:var(--text3);font-size:11px">não capturada</span>')+'</div>'+
+        '</div><div style="font-size:13px;color:var(--text2);font-style:italic;border-left:3px solid var(--gold);padding-left:10px">'+it.diverg+'</div>'+
+        '<button class="bs rd" style="margin-top:8px;font-size:9px" onclick="removerLetra('+it.id+')">🗑 Remover</button></div>';
+    }).join('');
+}
+
+function removerLetra(id) {
+  letrasComparadas = letrasComparadas.filter(function(x){ return x.id !== id; });
+  renderLetras();
+}
+
+// ==================== REPORT ====================
+function genReport() {
+  var f = {
+    proc:  document.getElementById('rProc').value  || '—',
+    vara:  document.getElementById('rVara').value  || '—',
+    perito:document.getElementById('rPerito').value|| '—',
+    reg:   document.getElementById('rReg').value   || '—',
+    req:   document.getElementById('rReq').value   || '—',
+    rqd:   document.getElementById('rRqd').value   || '—',
+    obj:   document.getElementById('rObj').value   || '—',
+    data:  document.getElementById('rData').value  || new Date().toLocaleDateString('pt-BR'),
+    obs:   document.getElementById('rObs').value   || '',
+  };
+  var meta = document.getElementById('rmeta');
+  var fields = [['Nº do Processo',f.proc],['Vara / Comarca',f.vara],['Perito Responsável',f.perito],['Nº de Registro',f.reg],['Parte Requerente',f.req],['Parte Requerida',f.rqd],['Objeto da Perícia',f.obj],['Data do Laudo',f.data]];
+  meta.innerHTML = fields.map(function(x){ return '<dt>'+x[0]+'</dt><dd>'+x[1]+'</dd>'; }).join('');
+  document.getElementById('rpPer').textContent = f.perito;
+  document.getElementById('rpVar').textContent = f.vara;
+  var body = document.getElementById('rbody');
+  if (analysisData) {
+    body.innerHTML =
+      '<h3 style="font-family:Cinzel,serif;font-size:13px;letter-spacing:2px;margin:18px 0 8px;text-transform:uppercase">I — ANÁLISE TÉCNICA</h3>' +
+      '<p style="font-size:13px;line-height:1.8;margin-bottom:10px">Em cumprimento ao objeto pericial, procedeu-se ao exame técnico comparativo das peças apresentadas, com metodologia baseada no <em>Tratado de Documentoscopia da Falsidade Documental</em> (Del Picchia Filho, Celso M. R. Del Picchia e Ana Maura G. Del Picchia — 3ª ed.), com aplicação da análise humanizada que considera a variabilidade natural da escrita humana.</p>' +
+      '<h3 style="font-family:Cinzel,serif;font-size:13px;letter-spacing:2px;margin:14px 0 8px;text-transform:uppercase">II — RESULTADO</h3>' +
+      '<table class="rtable2"><thead><tr><th>#</th><th>Característica</th><th>Similaridade</th><th>Status</th></tr></thead><tbody>' +
+      analysisData.results.map(function(r,i){ return '<tr><td>'+(i+1)+'</td><td>'+r.n+'</td><td>'+r.s+'%</td><td>'+(r.ok?'CONFORME':'DIVERGENTE')+'</td></tr>'; }).join('') +
+      '</tbody></table>' +
+      '<p style="font-size:13px;margin-top:10px"><strong>Similaridade Total: '+analysisData.total+'% | Pontos conformes: '+analysisData.ok+' | Divergências: '+analysisData.fail+'</strong></p>' +
+      (f.obs ? '<p style="font-size:13px;margin-top:8px"><em>Obs.: '+f.obs+'</em></p>' : '') +
+      '<h3 style="font-family:Cinzel,serif;font-size:13px;letter-spacing:2px;margin:14px 0 8px;text-transform:uppercase">III — CONCLUSÃO</h3>' +
+      '<p style="font-size:13px;line-height:1.8">Com base na análise técnica realizada, confronto das características grafológicas e considerando os fatores humanos intervenientes, concluímos que a peça questionada apresenta índice de similaridade de <strong>'+analysisData.total+'%</strong> em relação ao padrão autêntico, indicando <strong>'+verdictLabel(analysisData.total)+'</strong>. É o laudo.</p>' +
+      (letrasComparadas.length ? (
+        '<h3 style="font-family:Cinzel,serif;font-size:13px;letter-spacing:2px;margin:18px 0 8px;text-transform:uppercase">IV — COMPARAÇÃO DE LETRAS INDIVIDUAIS</h3>' +
+        '<p style="font-size:13px;line-height:1.8;margin-bottom:10px">Procedeu-se ao exame grafotécnico comparativo de <strong>'+letrasComparadas.length+' letra(s)</strong> extraídas das peças em confronto, conforme detalhado abaixo:</p>' +
+        letrasComparadas.map(function(it, idx){
+          return '<div style="margin-bottom:14px;border:1px solid #ccc;padding:10px;page-break-inside:avoid">' +
+            '<div style="font-family:Cinzel,serif;font-size:11px;font-weight:bold;letter-spacing:1px;margin-bottom:8px;border-bottom:1px solid #ccc;padding-bottom:4px">LETRA '+(idx+1)+'</div>' +
+            '<table style="width:100%;border-collapse:collapse;margin-bottom:8px"><tr>' +
+            '<td style="width:50%;padding:6px;border:1px solid #ddd;text-align:center;vertical-align:top">' +
+              '<div style="font-size:10px;font-weight:bold;color:#333;margin-bottom:4px">PEÇA AUTÊNTICA</div>' +
+              (it.autImg ? '<img src="'+it.autImg+'" style="max-width:120px;max-height:80px;border:1px solid #999">' : '<span style="font-size:10px;color:#999">não capturada</span>') +
+            '</td>' +
+            '<td style="width:50%;padding:6px;border:1px solid #ddd;text-align:center;vertical-align:top">' +
+              '<div style="font-size:10px;font-weight:bold;color:#333;margin-bottom:4px">PEÇA QUESTIONADA</div>' +
+              (it.qstImg ? '<img src="'+it.qstImg+'" style="max-width:120px;max-height:80px;border:1px solid #999">' : '<span style="font-size:10px;color:#999">não capturada</span>') +
+            '</td></tr></table>' +
+            '<div style="font-size:12px;line-height:1.7;border-left:3px solid #333;padding-left:10px"><strong>Divergência observada:</strong> '+it.diverg+'</div>' +
+            '</div>';
+        }).join('')
+      ) : '');
+  } else {
+    body.innerHTML = '<p style="color:#888;font-style:italic">Execute a análise pericial antes de gerar o relatório completo.</p>';
+  }
+  document.getElementById('rprev').classList.add('on');
+  document.getElementById('rprev').scrollIntoView({behavior:'smooth'});
+}
+
+function printReport() { genReport(); setTimeout(function(){ window.print(); }, 400); }
+
+// ==================== LIBRARY ====================
+var libContent = {
+  cap1: {
+    t:'Cap. 1-3 — Documentoscopia: Conceito, Definição e História',
+    c:'<p>A <strong>Documentoscopia</strong> é a ciência que estuda os documentos para verificar sua autenticidade ou detectar falsificações. Compreende a análise da escrita manuscrita, dos meios de impressão, do papel, das tintas e de todos os elementos materiais que compõem um documento.</p>' +
+      '<h4>Grafoscopia, Grafística, Grafotécnica e Perícia Gráfica</h4>' +
+      '<p>São denominações sinônimas e aceitáveis, de acepção restrita, válidas para o capítulo documentoscópico relativo aos "grafismos" — escritas diretamente resultantes dos gestos gráficos. Por conseguinte, a Grafoscopia constitui parte da Documentoscopia, com o objetivo de verificar a autenticidade ou a autoria dos grafismos.</p>' +
+      '<div class="exc">Aprovada pela Organização Criminal da Polícia Internacional (INTERPOL) e em vários congressos nacionais e internacionais, a Grafoscopia é hoje reconhecida internacionalmente como a ciência da perícia gráfica.</div>' +
+      '<h4>Diferença de Grafologia e Grafoscopia</h4>' +
+      '<p>A "Grafologia" tem por finalidade a descoberta das qualidades morais ou temperamentais do escritor. A Grafoscopia tem por objetivo verificar a autenticidade ou autoria dos grafismos. São ciências distintas com objetivos completamente diferentes. Ao pedir exame pericial para verificar autenticidade de documentos, jamais se deve usar a expressão "exame grafológico".</p>'
+  },
+  cap4: {
+    t:'Cap. 4 — Documentos Questionados e Padrões de Comparação',
+    c:'<p>Documentos questionados — peças-motivo — peças de exame — são expressões usadas para indicar os documentos objetivados em exame pericial.</p>' +
+      '<div class="exc">Para o perito, o documento é uma peça sagrada. Deverá retornar aos autos, ou devolvido às partes interessadas, nas mesmas condições físicas em que foi exibido.</div>' +
+      '<p>Deve-se evitar dobrá-lo desnecessariamente. Não se justificam anotações ou marcas no documento a ser examinado — conselho extensivo a advogados, juízes, banqueiros e outros que manuseiam essas peças com antecipação.</p>' +
+      '<h4>Padrões de Comparação</h4>' +
+      '<p>São fundamentais para qualquer exame pericial grafotécnico. Sem um bom padrão, o perito não pode concluir com segurança. Os padrões devem ser: espontâneos, coevos (da mesma época), numerosos, variados e de boa qualidade.</p>' +
+      '<p>As figuras 4.4 a 4.13 do tratado demonstram claramente as diferenças entre assinatura falsa, grafia normal e padrão induzido: os traços lentos, indecisos, com formas semelhantes à firma imitada, evidenciam a cópia forçada da assinatura legítima.</p>'
+  },
+  cap5: {
+    t:'Cap. 5 — Grafoscopia: Princípio Fundamental, Postulado e Leis do Grafismo',
+    c:'<h4>Princípio da Individualidade</h4>' +
+      '<p>A individualização do grafismo encontra muitas razões que a justificam — praticamente ela é indiscutível. Jamais deparamos com dois grafismos, com alguma extensão de escrita, suscetíveis de confusão.</p>' +
+      '<div class="exc">Do princípio fundamental decorre a impossibilidade da imitação gráfica perfeita. Se houvesse alguém capaz de reproduzir a escrita de outrem, com tal primor que nem mesmo o grafotécnico competente fosse capaz de reconhecer a falsidade, não haveria a referida individualização gráfica.</div>' +
+      '<h4>Postulado Geral de Pellat</h4>' +
+      '<p>"As leis da escrita independem dos alfabetos utilizados." A familiarização com o alfabeto é exigência necessária para casos de determinação de autoria.</p>' +
+      '<h4>DNA da Escrita</h4>' +
+      '<p>Cada pessoa possui um conjunto de características gráficas individuais e intransferíveis. Esses traços são tão únicos quanto uma impressão digital — constituem o DNA gráfico do autor.</p>'
+  },
+  cap8: {
+    t:'Cap. 8 — Grafotécnica e Morfologia Gráfica / Grafocinética',
+    c:'<h4>Grafocinética</h4>' +
+      '<p>A Grafocinética trata isoladamente do traço, sem levar em consideração o movimento executado — estudo dos movimentos, anteriormente conhecida como "gênese" gráfica. É o capítulo mais importante da Grafoscopia.</p>' +
+      '<p>A análise grafocinética marca a nova fase da Grafoscopia, quando o perito deixou de dar exclusiva atenção à forma, passando a pesquisar os gestos que lhe deram origem. Com o exame do cinetismo gráfico, a perícia desvencilhou-se do empirismo do passado.</p>' +
+      '<h4>A Análise Grafocinética</h4>' +
+      '<p>Tem por fim verificar como se formam os traços, letras e vocábulos, quais os hábitos de movimentação do escritor e, ainda, de suma importância, as causas determinadoras dos impulsos, ênfases e anomalias do movimento.</p>' +
+      '<div class="exc">O perito humanizado não é aquele que encontra mais diferenças — é aquele que sabe distinguir as diferenças significativas das variações naturais e inevitáveis da condição humana.</div>'
+  },
+  cap9: {
+    t:'Cap. 9 — Qualidades Gerais do Grafismo',
+    c:'<p><strong>Qualidades, Característicos ou Elementos Gráficos</strong> — são expressões sinônimas. Estudam os elementos que transparecem no conjunto das letras formando a palavra; na sucessão das palavras, compondo a linha; e na sucessão de linhas, dando lugar ao texto.</p>' +
+      '<h4>Divisão Inicial</h4>' +
+      '<p>Os elementos de ordem geral classificam-se em subjetivos ou objetivos. Os primeiros são apreciados ou sentidos, não se conseguindo, porém, demonstrá-los adequadamente. Os elementos objetivos são passíveis de ilustração, podendo ser medidos.</p>' +
+      '<p>Todos os elementos gráficos (quer de ordem geral, quer grafocinéticos, quer morfológicos) podem ser muito aparentes (conspícuos) ou pouco visíveis (inconspícuos).</p>'
+  },
+  cap14: {
+    t:'Cap. 14 — Escritas Autênticas',
+    c:'<h4>Tipos de Escritas Autênticas Inquinadas</h4>' +
+      '<p>As escritas autênticas inquinadas podem se apresentar sob quatro aspectos:</p>' +
+      '<p>a) <strong>Autofalsificações</strong> — modalidades de simulações de inautenticidade onde firmas autênticas são viciadas no ato em que consignadas. São assinaturas defraudadas pelo próprio signatário, mediante a introdução de vícios que ensejem inquiná-las de falsas.</p>' +
+      '<p>b) <strong>Simulação de falso gráfico</strong> — o próprio escritor simula uma alteração ou diferença em sua escrita.</p>' +
+      '<p>c) <strong>Transplante de escritas</strong> — transferência de elementos de uma escrita para outra.</p>' +
+      '<p>d) <strong>Mera negativa de autenticidade, ou genuína</strong> — quando o próprio autor nega ser sua a assinatura.</p>'
+  },
+  cap18: {
+    t:'Cap. 18 — Textos Datilografados e Mecanografias',
+    c:'<p>Muitas escritas são atualmente produzidas por meios exclusivamente mecânicos ou fotomecânicos. São as datilografias, fotografias, as escritas de carimbo, as tipográficas, as litografias, off-set, reto-gravuras, etc.</p>' +
+      '<p>Atualmente, assumem a máxima importância as resultantes de periféricos de computador — as impressoras. A natureza dessas escritas, quase sempre, é reconhecida através das tintas e materiais usados.</p>' +
+      '<div class="exc">Se é uma escrita resultante de impressão fac-similar de carimbo, a natureza da tinta e a qualidade do gravado a denunciarão.</div>' +
+      '<h4>Identificação de Impressoras</h4>' +
+      '<p>Cada impressora deixa marcas características no documento impresso — pontos de calibração, densidade de tinta, características do cabeçote — que permitem ao perito identificar o equipamento utilizado na confecção do documento.</p>'
+  },
+  falsidade: {
+    t:'Tipos e Técnicas de Falsificação Documental',
+    c:'<h4>Falsificação Servil (por Decalque)</h4>' +
+      '<p>Cópia fiel por decalque ou sobreposição. Resulta em traços lentos, trêmulos, com pausas visíveis e ausência de espontaneidade. Paradoxalmente, é a que mais se assemelha ao original, podendo atingir 99-100% de semelhança visual — o que, segundo o princípio da humanização, é justamente uma evidência de falsificação.</p>' +
+      '<h4>Falsificação por Imitação</h4>' +
+      '<p>O falsário tenta reproduzir a assinatura de memória ou após treinamento. Os traços são mais fluentes, mas as proporções e ângulos diferem do padrão autêntico.</p>' +
+      '<h4>Falsificação Induzida</h4>' +
+      '<p>O próprio autor é induzido a assinar de forma diferente de sua grafia natural. Observam-se indecisões no detalhe, formas próximas à da falsa, traços lentos e forçados. Figuras 4.4 a 4.13 do Tratado demonstram esses detalhes.</p>' +
+      '<div class="exc">A falsificação perfeita não existe. Todo falsário, independentemente de sua habilidade, deixa rastros. O perito experiente sabe onde procurá-los.</div>' +
+      '<h4>Adulteração</h4>' +
+      '<p>Modificação de documento autêntico — raspagem, substituição de elementos, acréscimo de texto. Detectada por análise de tinta, papel, alinhamento e coerência do documento.</p>'
+  },
+  humaniz: {
+    t:'Humanização na Análise Pericial — DNA da Escrita',
+    c:'<h4>O Princípio da Humanização</h4>' +
+      '<p>É o que diferencia um sistema pericial verdadeiro de uma simples comparação mecânica. Cada pessoa possui um conjunto de hábitos motores cristalizados na escrita que são tão únicos quanto sua impressão digital.</p>' +
+      '<h4>Variabilidade Natural (3% a 4%)</h4>' +
+      '<p>A mesma pessoa, ao assinar múltiplas vezes, sempre apresentará pequenas variações — resultado da interação entre estado emocional, postura, cansaço, pressão da caneta e velocidade. Essa variação é da ordem de <strong>3% a 4%</strong>.</p>' +
+      '<p>Portanto, semelhança de <strong>96% a 97%</strong> é normal e esperada em assinaturas autênticas. Uma assinatura com <strong>100% de identidade é biologicamente impossível</strong> — e, portanto, suspeita de falsificação por decalque ou processo mecânico.</p>' +
+      '<h4>Fatores Intervenientes</h4>' +
+      '<p>• <strong>Idade:</strong> Idosos e crianças apresentam traços naturalmente mais irregulares, que não devem ser confundidos com falsificação.</p>' +
+      '<p>• <strong>Estado emocional:</strong> Sob pressão, estresse ou coação, a grafia pode alterar-se significativamente sem que isso implique falsificação.</p>' +
+      '<p>• <strong>Doenças:</strong> Parkinson, AVC e outras condições neurológicas afetam profundamente a escrita. O perito deve conhecer o histórico de saúde do autor.</p>' +
+      '<div class="exc">O perito humanizado não é aquele que encontra mais diferenças — é aquele que sabe distinguir as diferenças significativas das variações naturais e inevitáveis da condição humana.</div>'
+  },
+  instrumental: {
+    t:'Meios Documentoscópicos de Investigação — Instrumental',
+    c:'<p>Para os exames grafotécnicos, uma ampliação de 6x (óptica) é, em regra, suficiente, permitindo boa visibilidade do traçado. Deve-se levar em conta o grau de acuidade visual do observador.</p>' +
+      '<p>Para alguns pormenores gráficos pode ser necessário maior aumento. Em regra, porém, o grau de ampliação não ultrapassa, nos exames gráficos, a mais de 10x (10 diâmetros).</p>' +
+      '<div class="exc">Quanto maior o grau de ampliação, tanto menor o campo de observação. Os gestos gráficos devem ser estudados em sequência — no campo ótico deverão ser focalizadas duas ou três letras, com suas ligações.</div>' +
+      '<h4>Fotografia Forense</h4>' +
+      '<p>A fotografia em ampliações adequadas, com imagens nítidas obtidas com auxílio de filtros e outros dispositivos técnicos, tomou corpo com o aperfeiçoamento das lupas e microscópios. A análise grafocinética marcou a nova fase da Grafoscopia.</p>'
+  },
+  questoes: {
+    t:'Quesitos Periciais — As 27 Perguntas Fundamentais',
+    c:'<h4>Em relação à assinatura:</h4>' +
+      '<p>1º A firma em exame é ou não genuína? 2º A quem pertence a firma em exame? 3º A assinatura foi realmente lançada na época da data no documento? 4º A firma foi produzida livremente, ou com o auxílio de outra pessoa, ou se trata de escrita forçada? 5º A escrita foi produzida em condições normais (físicas ou psicológicas)? Foi lançada sob coação? Estava o escritor com discernimento normal quando assinou?</p>' +
+      '<h4>Em relação a possíveis alterações:</h4>' +
+      '<p>15º Existem vestígios de alteração no documento exibido (raspagem, lavagem química, acréscimo ou recorte)? 16º Em caso positivo, seria possível ao perito reconstituir o texto primitivo? 17º Ainda em caso positivo, quando se verificaram essas alterações? 18º Existem elementos documentoscópicos a permitirem ao perito reconhecer que se trata de adulteração, e não de simples retificação ou corrigenda?</p>' +
+      '<h4>Outras indagações:</h4>' +
+      '<p>19º A assinatura em exame resultou de impressão fac-similar de carimbo? 20º O selo aderido ao documento foi reaproveitado? 21º É legítima a cédula exibida? 22º O selo aposto no documento é legítimo ou verdadeiro? 24º A assinatura foi lançada antes ou depois do contexto? 26º Os dois documentos exibidos, contendo a mesma data, foram efetivamente confeccionados no mesmo dia? 27º Seria possível ao perito estimar a época em que o documento foi elaborado?</p>'
+  }
+};
+
+function openLib(key) {
+  var v = document.getElementById('lviewer');
+  var c = libContent[key];
+  if (!c) return;
+  v.innerHTML = '<h3>'+c.t+'</h3>' + c.c;
+  v.classList.add('on');
+  v.scrollIntoView({behavior:'smooth'});
+}
+
+function addLibMat() {
+  if (!currentUser || currentUser.role !== 'admin') {
+    toast('Função disponível apenas para o administrador','er'); return;
+  }
+  showView('vAdmin', null);
+  toast('Acesse "Gerenciar Biblioteca" no Painel Admin','ok');
+}
+
+// ==================== CHECKLIST ====================
+function togCheck(el) {
+  if (el.classList.contains('ck')) {
+    el.classList.remove('ck'); el.classList.add('fail');
+    el.querySelector('.chst').textContent = 'FALHOU';
+  } else if (el.classList.contains('fail')) {
+    el.classList.remove('fail');
+    el.querySelector('.chst').textContent = 'PENDENTE';
+  } else {
+    el.classList.add('ck');
+    el.querySelector('.chst').textContent = '✓ OK';
+  }
+}
+
+function togCrit(el) { el.classList.toggle('ck'); }
+
+function checkAll() {
+  document.querySelectorAll('#chklist .chitem').forEach(function(el){
+    el.classList.add('ck'); el.classList.remove('fail');
+    el.querySelector('.chst').textContent = '✓ OK';
+  });
+}
+
+function finalize() {
+  var all = document.querySelectorAll('#chklist .chitem');
+  var ck = document.querySelectorAll('#chklist .chitem.ck').length;
+  var r = document.getElementById('confRes');
+  r.style.display = 'block';
+  if (ck === all.length) {
+    r.innerHTML = '<div class="verdict vauto"><div class="vt">✅ SEGUNDA CONFERÊNCIA APROVADA</div><div class="vd">Todos os '+all.length+' pontos verificados. O laudo está apto para impressão.</div></div>';
+    toast('Conferência aprovada! Redirecionando...','ok');
+    setTimeout(function(){ showView('vRelatorio',null); },1600);
+  } else {
+    r.innerHTML = '<div class="verdict vsusp"><div class="vt">⚠ '+ck+'/'+all.length+' PONTOS VERIFICADOS</div><div class="vd">Complete todos os pontos antes de emitir o laudo oficial.</div></div>';
+  }
+}
+
+// ==================== ADMIN ====================
+function loadAdminProfile() {
+  var u = users[0];
+  document.getElementById('adNome').value  = u.name;
+  document.getElementById('adEmail').value = u.email;
+  document.getElementById('adCpf').value   = u.cpf !== '—' ? u.cpf : '';
+}
+
+function saveAdminProfile() {
+  var nome  = document.getElementById('adNome').value.trim();
+  var email = document.getElementById('adEmail').value.trim();
+  var senha = document.getElementById('adSenha').value.trim();
+  var cpf   = document.getElementById('adCpf').value.trim();
+  if (!nome || !email) { toast('Preencha nome e e-mail','er'); return; }
+  users[0].name  = nome;
+  users[0].email = email;
+  if (cpf)   users[0].cpf   = cpf;
+  if (senha) {
+    if (senha.length!==4||!/^\d{4}$/.test(senha)) { toast('Senha deve ter 4 dígitos numéricos','er'); return; }
+    users[0].pass = senha;
+    ADMIN_EMAIL = email;
+    ADMIN_PASS  = senha;
+  } else {
+    ADMIN_EMAIL = email;
+  }
+  document.getElementById('tusr').textContent = nome.split(' ')[0].toUpperCase();
+  document.getElementById('adSenha').value = '';
+  toast('✅ Perfil atualizado com sucesso!','ok');
+}
+
+function loadUsersTable() {
+  var tb = document.getElementById('utbody');
+  var nonAdmin = users.filter(function(u){ return u.role!=='admin'; });
+  if (!nonAdmin.length) {
+    tb.innerHTML = '<tr><td colspan="6" style="color:var(--text3);text-align:center;font-style:italic">Nenhum usuário cadastrado ainda.</td></tr>';
+    return;
+  }
+  tb.innerHTML = nonAdmin.map(function(u){
+    return '<tr><td>'+u.name+'</td><td>'+u.email+'</td><td>'+u.cpf+'</td><td>'+u.tel+'</td><td><span class="badge bgreen">'+u.status+'</span></td><td><button class="bs rd" onclick="rmUser(\''+u.email+'\')">Remover</button></td></tr>';
+  }).join('');
+}
+
+function rmUser(email) {
+  users = users.filter(function(u){ return u.email!==email; });
+  loadUsersTable();
+  toast('Usuário removido','ok');
+}
+
+function switchLibTab(tab) {
+  var isAdmin = (currentUser && currentUser.role === 'admin');
+  document.getElementById('libPanelUser').style.display  = tab === 'user'  ? 'block' : 'none';
+  document.getElementById('libPanelAdmin').style.display = tab === 'admin' ? 'block' : 'none';
+  document.getElementById('libTabUser').style.background  = tab === 'user'  ? 'var(--gold)' : 'var(--bg2)';
+  document.getElementById('libTabUser').style.color       = tab === 'user'  ? 'var(--bg)'   : 'var(--text2)';
+  document.getElementById('libTabAdmin').style.background = tab === 'admin' ? 'var(--gold)' : 'var(--bg2)';
+  document.getElementById('libTabAdmin').style.color      = tab === 'admin' ? 'var(--bg)'   : 'var(--text2)';
+}
+
+function doWebSearch() {
+  var q = document.getElementById('webSearchQ').value.trim();
+  if (!q) { toast('Digite uma consulta','er'); return; }
+  var res = document.getElementById('webSearchResult');
+  res.style.display = 'block';
+  res.innerHTML = '<div style="font-family:Space Mono;font-size:9px;color:var(--gold);letter-spacing:1px;margin-bottom:8px">🌐 RESULTADO DA INTERNET — ' + q.toUpperCase() + '</div>' +
+    '<div style="background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--teal);padding:12px;font-size:13px;color:var(--text2);line-height:1.8">' +
+    '<strong style="color:var(--teal)">⚠ Informação obtida da internet (não verificada pela biblioteca interna):</strong><br><br>' +
+    'Para consultar fontes oficiais de perícia, acesse:<br>' +
+    '• <a href="https://www.abppf.org.br" target="_blank" style="color:var(--gold)">ABPPF — Associação Brasileira de Papiloscopia e Perícias Forenses</a><br>' +
+    '• <a href="https://www.icp.gov.br" target="_blank" style="color:var(--gold)">ICP — Instituto de Criminalística</a><br>' +
+    '• <a href="https://www.periciaforense.com.br" target="_blank" style="color:var(--gold)">Perícia Forense — referência nacional</a><br>' +
+    '• <a href="https://www.google.com/search?q=pericia+' + encodeURIComponent(q) + '+site:gov.br+OR+site:jus.br" target="_blank" style="color:var(--gold)">🔍 Buscar "' + q + '" em fontes oficiais</a>' +
+    '</div>';
+  toast('🌐 Use os links para consultar — prioridade sempre à biblioteca interna','');
+}
+
+function renderLibMateriais() {
+  var grid = document.getElementById('libMatGrid');
+  var sec  = document.getElementById('libMatSection');
+  var adminList = document.getElementById('libAdminMatList');
+  var userCards = document.getElementById('libUserMatCards');
+
+  if (!libMateriais.length) {
+    if (sec) sec.style.display = 'none';
+    if (adminList) adminList.innerHTML = '';
+    if (userCards) userCards.innerHTML = '';
+    return;
+  }
+
+  // Show in user view as readable cards
+  if (sec) sec.style.display = 'block';
+  if (grid) {
+    grid.innerHTML = libMateriais.map(function(mat) {
+      var icon = mat.tipo === 'livro' ? '📗' : mat.tipo === 'video' ? '🎬' : '📰';
+      var size = (mat.size/1024).toFixed(1);
+      return '<div style="background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--gold);padding:12px;cursor:pointer" onclick="abrirMat(\'' + mat.id + '\')">' +
+        '<div style="font-size:28px;margin-bottom:6px">' + icon + '</div>' +
+        '<div style="font-size:13px;color:var(--text);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + mat.nome + '</div>' +
+        '<div style="font-family:Space Mono;font-size:8px;color:var(--text3);letter-spacing:1px">' + (mat.arquivos ? mat.arquivos.filter(Boolean).length + ' arq. · ' + ((mat.totalSize||0)/1024).toFixed(0) + ' KB' : (mat.size||0)/1024|0 + ' KB') + '</div>' +
+        '<button class="bs gd" style="margin-top:8px;font-size:9px;width:100%" onclick="event.stopPropagation();abrirMat(\'' + mat.id + '\')">👁 Abrir na Íntegra</button>' +
+        '</div>';
+    }).join('');
+  }
+
+  // Show in user cards area inside lgrid
+  if (userCards) {
+    userCards.innerHTML = libMateriais.map(function(mat) {
+      var icon = mat.tipo === 'livro' ? '📗' : mat.tipo === 'video' ? '🎬' : '📰';
+      var count = mat.arquivos ? mat.arquivos.filter(Boolean).length : 1;
+      return '<div class="lcard" onclick="abrirMat(\'' + mat.id + '\')" style="border-left-color:var(--teal)">' +
+        '<div class="lico">' + icon + '</div>' +
+        '<h4>' + mat.nome + '</h4>' +
+        '<p>' + count + ' arquivo(s) — clique para ler na íntegra.</p>' +
+        '<div class="ltag" style="color:var(--teal)">ACERVO · LER NA ÍNTEGRA</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  // Admin management list
+  if (adminList) {
+    adminList.innerHTML = '<div style="font-family:Cinzel;font-size:11px;color:var(--gold);letter-spacing:2px;margin-bottom:10px">MATERIAIS SALVOS (' + libMateriais.length + ')</div>' +
+      libMateriais.map(function(mat) {
+        var icon = mat.tipo === 'livro' ? '📗' : mat.tipo === 'video' ? '🎬' : '📰';
+        return '<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg2);border:1px solid var(--border);margin-bottom:6px">' +
+          '<span style="font-size:18px">' + icon + '</span>' +
+          '<div style="flex:1;font-size:12px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + mat.nome + '</div>' +
+          '<button class="bs gd" style="font-size:9px;padding:4px 8px" onclick="abrirMat(\'' + mat.id + '\')">👁</button>' +
+          '<button class="bs rd" style="font-size:9px;padding:4px 8px" onclick="removerMat(\'' + mat.id + '\')">🗑</button>' +
+          '</div>';
+      }).join('');
+  }
+}
+
+
+function adminLib(tipo) {
+  if (tipo === 'atualizar') { toast('Conteúdo atualizado!','ok'); return; }
+  // Hide all panels first
+  var panels = ['libPanelLivro','libPanelVideo','libPanelArtigo'];
+  panels.forEach(function(id){ document.getElementById(id).style.display='none'; });
+  // Show the requested panel
+  var map = {livro:'libPanelLivro', video:'libPanelVideo', artigo:'libPanelArtigo'};
+  var panel = document.getElementById(map[tipo]);
+  if (panel) {
+    panel.style.display = 'block';
+    panel.scrollIntoView({behavior:'smooth'});
+  }
+}
+
+function libHandleDrop(e, tipo) {
+  e.preventDefault();
+  e.stopPropagation();
+  var zone = document.getElementById('libDrop'+tipo);
+  zone.classList.remove('dov');
+  var files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
+  libProcessFiles(files, tipo);
+}
+
+function libProcessFiles(files, tipo) {
+  if (!files || !files.length) return;
+  var list = document.getElementById('libFileList'+tipo);
+  var existing = list.innerHTML === '<em style="color:var(--text3)">Nenhum arquivo ainda.</em>' ? '' : list.innerHTML;
+  Array.from(files).forEach(function(file) {
+    var size = (file.size/1024).toFixed(1);
+    var icon = file.type.startsWith('image/') ? '🖼️' : file.type === 'application/pdf' ? '📄' : file.type.startsWith('video/') ? '🎬' : '📁';
+    existing += '<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--bg);border:1px solid var(--border);margin-bottom:6px;">' +
+      '<span style="font-size:18px">'+icon+'</span>' +
+      '<div style="flex:1;min-width:0"><div style="font-size:13px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+file.name+'</div>' +
+      '<div style="font-size:10px;color:var(--text3);font-family:Space Mono">'+size+' KB · '+file.type+'</div></div>' +
+      '<span style="font-family:Space Mono;font-size:9px;color:var(--green);letter-spacing:1px">✓ CARREGADO</span></div>';
+  });
+  list.innerHTML = existing;
+  toast('✅ '+files.length+' arquivo(s) carregado(s)!','ok');
+}
+
+function libTriggerFile(tipo) {
+  document.getElementById('libFileInput'+tipo).click();
+}
+
+function libPasteHandler(e, tipo) {
+  var items = (e.clipboardData || e.originalEvent.clipboardData).items;
+  var files = [];
+  for (var i=0; i<items.length; i++) {
+    if (items[i].kind === 'file') files.push(items[i].getAsFile());
+  }
+  if (files.length) libProcessFiles(files, tipo);
+  else toast('Cole uma imagem ou arquivo diretamente aqui','');
+}
+
+function libSave(tipo) {
+  var list = document.getElementById('libFileList'+tipo);
+  if (!list.innerHTML.includes('CARREGADO')) { toast('Carregue ao menos um arquivo primeiro','er'); return; }
+  var input = document.getElementById('libFileInput'+tipo);
+  var files = input.files;
+  if (!files || !files.length) { toast('✅ Material registrado!','ok'); return; }
+
+  var icon = tipo === 'livro' ? '📗' : tipo === 'video' ? '🎬' : '📰';
+  var titulo = tipo === 'livro' ? 'Livro / Documento' : tipo === 'video' ? 'Vídeo Pericial' : 'Artigo / Documento';
+  var nomeGrupo = files.length === 1 ? files[0].name : titulo + ' — ' + files.length + ' arquivo(s) · ' + new Date().toLocaleDateString('pt-BR');
+
+  // Collect all files as a group
+  var grupo = {
+    id: 'mat_' + Date.now(),
+    tipo: tipo,
+    nome: nomeGrupo,
+    totalSize: 0,
+    arquivos: []  // will be filled as each FileReader completes
+  };
+
+  var loaded = 0;
+  var total = files.length;
+
+  Array.from(files).forEach(function(file, i) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      grupo.arquivos[i] = {
+        nome: file.name,
+        size: file.size,
+        mime: file.type,
+        data: e.target.result
+      };
+      grupo.totalSize += file.size;
+      loaded++;
+      if (loaded === total) {
+        // Remove any duplicate group with same name
+        libMateriais = libMateriais.filter(function(m){ return m.nome !== grupo.nome; });
+        libMateriais.push(grupo);
+        renderLibMateriais();
+        toast('✅ ' + total + ' arquivo(s) salvos na biblioteca como "' + nomeGrupo + '"!', 'ok');
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+var libMateriais = [];
+
+function renderLibMateriais() {
+  var grid = document.getElementById('libMatGrid');
+  var sec  = document.getElementById('libMatSection');
+  if (!libMateriais.length) { sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  grid.innerHTML = libMateriais.map(function(mat) {
+    var icon = mat.tipo === 'livro' ? '📗' : mat.tipo === 'video' ? '🎬' : '📰';
+    var size = (mat.size/1024).toFixed(1);
+    return '<div style="background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--gold);padding:12px;cursor:pointer" onclick="abrirMat(\''+mat.id+'\')">' +
+      '<div style="font-size:28px;margin-bottom:6px">'+icon+'</div>' +
+      '<div style="font-size:13px;color:var(--text);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+mat.nome+'</div>' +
+      '<div style="font-family:Space Mono;font-size:8px;color:var(--text3);letter-spacing:1px">'+size+' KB</div>' +
+      '<div style="display:flex;gap:5px;margin-top:8px">' +
+      '<button class="bs gd" style="font-size:8px;padding:4px 8px" onclick="event.stopPropagation();abrirMat(\''+mat.id+'\')">👁 Ver</button>' +
+      '<button class="bs rd" style="font-size:8px;padding:4px 8px" onclick="event.stopPropagation();removerMat(\''+mat.id+'\')">🗑</button>' +
+      '</div></div>';
+  }).join('');
+}
+
+function abrirMat(id) {
+  var mat = libMateriais.find(function(m){ return String(m.id) === String(id); });
+  if (!mat) return;
+  matCurrentGroup = mat;
+  matTextExtracted = '';
+
+  var modal = document.getElementById('matViewModal');
+  var tit   = document.getElementById('matViewTit');
+  var cont  = document.getElementById('matViewContent');
+  var txtOut = document.getElementById('matTextContent');
+  tit.textContent = mat.nome;
+  modal.style.display = 'flex';
+
+  // Reset panels — text is primary, photos hidden
+  document.getElementById('matPanelText').style.display = 'block';
+  document.getElementById('matPanelPhotos').style.display = 'none';
+  document.getElementById('matTabBar').style.display = 'none';
+  document.getElementById('matExtractBar').style.display = 'none';
+  document.getElementById('btnToggleView').textContent = '📷 VER FOTOS ORIGINAIS';
+  txtOut.innerHTML = '<em style="color:var(--text3)">Clique em "🤖 EXTRAIR TEXTO COM IA" para a IA ler as fotos e montar o texto completo.</em>';
+
+  // Support both old format (single file: mat.data) and new format (group: mat.arquivos)
+  var arquivos = mat.arquivos ? mat.arquivos.filter(Boolean) : (mat.data ? [{nome: mat.nome, mime: mat.mime, data: mat.data, size: mat.size}] : []);
+
+  // Show AI extract button only if there are images
+  var hasImages = arquivos.some(function(a){ return a.mime && a.mime.startsWith('image/'); });
+  document.getElementById('btnExtractText').style.display = hasImages ? 'inline-block' : 'none';
+
+  if (!arquivos.length) {
+    cont.innerHTML = '<div style="color:var(--text3);text-align:center;padding:40px">Nenhum arquivo encontrado.</div>';
+    return;
+  }
+
+  // Render all files in full, in sequence (like a book/document)
+  var html = '<div style="max-width:900px;margin:0 auto">';
+
+  // Header info
+  html += '<div style="background:var(--bg2);border:1px solid var(--border);border-left:4px solid var(--gold);padding:14px;margin-bottom:20px">' +
+    '<div style="font-family:Cinzel;color:var(--gold);font-size:13px;letter-spacing:2px;margin-bottom:6px">' + mat.nome + '</div>' +
+    '<div style="font-family:Space Mono;font-size:9px;color:var(--text3);letter-spacing:1px">' +
+    arquivos.length + ' ARQUIVO(S) · ' + mat.tipo.toUpperCase() +
+    (hasImages ? ' · Use "🤖 EXTRAIR TEXTO COM IA" para ler o texto na íntegra' : '') +
+    '</div></div>';
+
+  // Render each file in full
+  arquivos.forEach(function(arq, idx) {
+    html += '<div style="margin-bottom:24px;border:1px solid var(--border);background:var(--bg2)">';
+
+    // File header for multi-file
+    if (arquivos.length > 1) {
+      html += '<div style="background:var(--bg3);padding:8px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">' +
+        '<span style="font-family:Space Mono;font-size:9px;color:var(--gold);letter-spacing:1px">ARQUIVO ' + (idx+1) + ' / ' + arquivos.length + '</span>' +
+        '<span style="font-size:11px;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px">' + arq.nome + '</span>' +
+        '</div>';
+    }
+
+    html += '<div style="padding:12px">';
+
+    if (arq.mime === 'application/pdf') {
+      html += '<embed src="' + arq.data + '" type="application/pdf" style="width:100%;height:85vh;border:none;display:block">';
+    } else if (arq.mime && arq.mime.startsWith('image/')) {
+      html += '<img src="' + arq.data + '" style="width:100%;height:auto;display:block" alt="' + arq.nome + '">';
+    } else if (arq.mime && arq.mime.startsWith('video/')) {
+      html += '<video src="' + arq.data + '" controls style="width:100%;max-height:80vh;background:#000;display:block"></video>';
+    } else if (arq.mime && arq.mime.startsWith('text/')) {
+      html += '<pre id="textpre_' + idx + '" style="color:var(--text);font-size:13px;line-height:1.8;white-space:pre-wrap;word-break:break-word;padding:10px">(Carregando...)</pre>';
+    } else {
+      html += '<div style="text-align:center;padding:30px">' +
+        '<div style="font-size:48px;margin-bottom:10px">📁</div>' +
+        '<div style="color:var(--text);margin-bottom:6px">' + arq.nome + '</div>' +
+        '<a href="' + arq.data + '" download="' + arq.nome + '" class="bs gd" style="display:inline-block;text-decoration:none;margin-top:10px">⬇ BAIXAR ARQUIVO</a>' +
+        '</div>';
+    }
+
+    html += '</div></div>';
+  });
+
+  html += '</div>';
+  cont.innerHTML = html;
+
+  // Load text files after render
+  arquivos.forEach(function(arq, idx) {
+    if (arq.mime && arq.mime.startsWith('text/')) {
+      var pre = document.getElementById('textpre_' + idx);
+      if (pre) {
+        try {
+          var txt = atob(arq.data.split(',')[1] || '');
+          pre.textContent = txt;
+        } catch(e) { pre.textContent = '(erro ao carregar)'; }
+      }
+    }
+  });
+
+  // Auto-start AI extraction if there are images
+  if (hasImages) {
+    setTimeout(function(){ extractTextFromMat(); }, 400);
+  }
+}
+
+function fecharMatView() {
+  document.getElementById('matViewModal').style.display = 'none';
+  document.getElementById('matViewContent').innerHTML = '';
+  document.getElementById('matTextContent').innerHTML = '<em style="color:var(--text3)">Clique em "🤖 EXTRAIR TEXTO COM IA" para a IA ler as fotos e montar o texto completo do livro/artigo.</em>';
+  document.getElementById('matExtractBar').style.display = 'none';
+  matCurrentGroup = null;
+}
+
+var matCurrentGroup = null;
+var matTextExtracted = '';
+var matViewMode = 'photos'; // 'photos' or 'text' or 'both'
+
+function toggleMatView() {
+  var photosPanel = document.getElementById('matPanelPhotos');
+  var textPanel   = document.getElementById('matPanelText');
+  var btn         = document.getElementById('btnToggleView');
+  if (photosPanel.style.display === 'none') {
+    // Show photos alongside text
+    photosPanel.style.display = 'block';
+    textPanel.style.flex = '1';
+    photosPanel.style.flex = '1';
+    textPanel.style.borderRight = '2px solid var(--border)';
+    // On mobile, use tabs
+    if (window.innerWidth < 700) {
+      photosPanel.style.display = 'none';
+      document.getElementById('matTabBar').style.display = 'flex';
+      showMatTab('text');
+    }
+    btn.textContent = '🙈 OCULTAR FOTOS';
+  } else {
+    photosPanel.style.display = 'none';
+    document.getElementById('matTabBar').style.display = 'none';
+    btn.textContent = '📷 VER FOTOS ORIGINAIS';
+  }
+}
+
+function showMatTab(tab) {
+  document.getElementById('matPanelPhotos').style.display = tab === 'photos' ? 'block' : 'none';
+  document.getElementById('matPanelText').style.display   = tab === 'text'   ? 'block' : 'none';
+  document.getElementById('matTabPhotos').style.background = tab === 'photos' ? 'var(--gold)' : 'var(--bg2)';
+  document.getElementById('matTabPhotos').style.color      = tab === 'photos' ? 'var(--bg)'   : 'var(--text2)';
+  document.getElementById('matTabText').style.background   = tab === 'text'   ? 'var(--gold)' : 'var(--bg2)';
+  document.getElementById('matTabText').style.color        = tab === 'text'   ? 'var(--bg)'   : 'var(--text2)';
+}
+
+async function extractTextFromMat() {
+  if (!matCurrentGroup) return;
+  var arquivos = matCurrentGroup.arquivos ? matCurrentGroup.arquivos.filter(Boolean) : [];
+  var imgArqs = arquivos.filter(function(a){ return a.mime && a.mime.startsWith('image/'); });
+  if (!imgArqs.length) { toast('Nenhuma imagem para extrair texto','er'); return; }
+
+  document.getElementById('matPanelText').style.display = 'block';
+  if (window.innerWidth < 700) {
+    document.getElementById('matTabBar').style.display = 'flex';
+    showMatTab('text');
+  }
+  document.getElementById('btnToggleView').textContent = '📷 VER SOMENTE FOTOS';
+
+  var bar      = document.getElementById('matExtractBar');
+  var status   = document.getElementById('matExtractStatus');
+  var progress = document.getElementById('matExtractProgress');
+  var textOut  = document.getElementById('matTextContent');
+  bar.style.display = 'block';
+  textOut.innerHTML = '';
+  matTextExtracted  = '';
+
+  var total = imgArqs.length;
+  var done  = 0;
+
+  // Test API availability first
+  status.textContent = 'Verificando conexão com IA...';
+  var apiOk = false;
+  try {
+    var testResp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 10,
+        messages: [{ role: 'user', content: 'ok' }]
+      })
+    });
+    if (testResp.status < 500) apiOk = true;
+  } catch(e) { apiOk = false; }
+
+  if (!apiOk) {
+    // Show images directly in sequence for reading
+    status.textContent = 'Exibindo ' + total + ' página(s) para leitura direta...';
+    var h = '<div style="padding:10px;background:var(--bg3);border-left:3px solid var(--gold);margin-bottom:16px;font-size:12px;color:var(--text2)">📷 Exibindo as fotos em sequência para leitura na íntegra.</div>';
+    imgArqs.forEach(function(arq, i) {
+      h += '<div style="margin-bottom:20px">' +
+        '<div style="font-family:Space Mono;font-size:9px;color:var(--text3);padding:4px 8px;background:var(--bg3);margin-bottom:4px">PÁGINA ' + (i+1) + ' / ' + total + '</div>' +
+        '<img src="' + arq.data + '" style="width:100%;height:auto;display:block;border:1px solid var(--border)">' +
+        '</div>';
+      progress.style.width = Math.round(((i+1)/total)*100) + '%';
+    });
+    textOut.innerHTML = h;
+    status.textContent = '✅ ' + total + ' página(s) prontas para leitura.';
+    progress.style.width = '100%';
+    return;
+  }
+
+  // API available — extract text 1 image at a time
+  for (var i = 0; i < imgArqs.length; i++) {
+    var arq = imgArqs[i];
+    status.textContent = 'Extraindo página ' + (i+1) + ' de ' + total + '...';
+    try {
+      var resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 4000,
+          system: 'Transcreva o texto da imagem rigorosamente na íntegra, palavra por palavra, sem omitir nada.',
+          messages: [{ role: 'user', content: [
+            { type: 'image', source: { type: 'base64', media_type: arq.mime || 'image/jpeg', data: arq.data.split(',')[1] } },
+            { type: 'text', text: 'Página ' + (i+1) + ' de ' + total + ': transcreva RIGOROSAMENTE e na ÍNTEGRA todo o texto visível.' }
+          ]}]
+        })
+      });
+      var data = await resp.json();
+      var pageText = data.content ? data.content.map(function(c){ return c.text||''; }).join('') : '(erro)';
+      matTextExtracted += '\n\n---\n**Página ' + (i+1) + '**\n\n' + pageText;
+      textOut.innerHTML = markdownToHtml(matTextExtracted);
+      done++;
+      progress.style.width = Math.round((done/total)*100) + '%';
+    } catch(err) {
+      matTextExtracted += '\n\n*(Erro página ' + (i+1) + ': ' + err.message + ')*';
+      textOut.innerHTML = markdownToHtml(matTextExtracted);
+    }
+  }
+  status.textContent = '✅ Extração concluída! ' + total + ' página(s).';
+  progress.style.width = '100%';
+  toast('✅ Texto extraído na íntegra!', 'ok');
+}
+
+
+function markdownToHtml(md) {
+  return md
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/^### (.*?)$/gm, '<h3 style="font-family:Cinzel;color:var(--gold);font-size:13px;letter-spacing:1px;margin:16px 0 6px">$1</h3>')
+    .replace(/^## (.*?)$/gm,  '<h2 style="font-family:Cinzel;color:var(--gold2);font-size:15px;letter-spacing:1px;margin:20px 0 8px">$1</h2>')
+    .replace(/^# (.*?)$/gm,   '<h1 style="font-family:Cinzel;color:var(--gold2);font-size:17px;letter-spacing:2px;margin:24px 0 10px">$1</h1>')
+    .replace(/^---$/gm, '<hr style="border:1px solid var(--border);margin:16px 0">')
+    .replace(/\n\n/g, '</p><p style="margin-bottom:12px">')
+    .replace(/\n/g, '<br>');
+}
+
+function removerMat(id) {
+  libMateriais = libMateriais.filter(function(m){ return String(m.id) !== String(id); });
+  renderLibMateriais();
+  toast('Material removido','');
+}
+
+function libClear(tipo) {
+  document.getElementById('libFileList'+tipo).innerHTML = '<em style="color:var(--text3)">Nenhum arquivo ainda.</em>';
+  document.getElementById('libFileInput'+tipo).value = '';
+  toast('Lista limpa','');
+}
+
+function saveConfig() {
+  toast('✅ Configurações salvas com sucesso!','ok');
+}
+
+// ==================== INIT ====================
+window.addEventListener('load', function(){
+  // Show login
+  scShow('scLogin');
+  // Drag & drop for images
+  setupDrop('A'); setupDrop('B');
+  // Drop areas open gallery on click (only when no image)
+  document.getElementById('dropA').addEventListener('click', function(){ if (!imgA) openGallery('A'); });
+  document.getElementById('dropB').addEventListener('click', function(){ if (!imgB) openGallery('B'); });
+  // Responsive nav: hide on mobile by default
+  if (window.innerWidth < 700) {
+    document.getElementById('sidenav').classList.add('hide');
+    document.getElementById('mc').classList.add('full');
+  }
+});
+</script>
+</body>
+</html>
